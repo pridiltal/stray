@@ -21,22 +21,24 @@
 #' @export
 #' @importFrom HDoutliers getHDmembers
 #' @importFrom FactoMineR MCA
+#' @importFrom gridExtra grid.arrange
+#' @importFrom tibble tibble
+#' @import ggplot2
 #' @import stats
 #' @references {Wilkinson, L. (2016). Visualizing outliers.}
 #' @examples
-#' set.seed(1)
-#' par(mfrow=c(1,1))
-#' x1 <- rnorm(mean=-6, sd=1, 100)
-#' x2 <- rnorm(mean=6, sd=2, 100)
-#' x <- c(x1, 0, x2)
-#' y <- rep(0, length(x))
-#' plot(x,y, pch=20, col="blue", main="Original Data",   yaxt='n', ylab=NA,  ylim=c(-0.05,0.5) )
-#' out.W <- find_HDoutliers(x)
-#' x[out.W]
-#' plot(x[-out.W],y[-out.W], pch=20, col="blue", main="Modified Algorithm", xlim=c(min(x), max(x)),
-#'      xlab="x",  yaxt='n', ylab=NA,  ylim=c(-0.05,0.5) )
-#' points( x[out.W], y[out.W],  col="darkgreen", pch=15)
-#'
+#' \dontrun{
+#' set.seed(1234)
+#' data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
+#' df <- tibble::tibble(index = rep(0, length(data)), data = data)
+#' data_out <- find_HDoutliers(data)
+#' data_plot <- ggplot(df, aes(x = data, y= index)) +
+#' geom_point() + xlab("x") + ylab("") +  ggtitle("Original Data")
+#' output_plot <- data_plot +
+#' geom_point(data = df[data_out, ], aes(x=data, y = index),
+#' colour = "red", size = 3) + ggtitle("Output")
+#' gridExtra::grid.arrange(data_plot, output_plot)
+#' }
 #'
 #' n <- 1000 # number of observations
 #' set.seed(3)

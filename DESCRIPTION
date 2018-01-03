@@ -5,7 +5,11 @@ Version: 0.1.0
 Imports: HDoutliers,
     FNN,
     FactoMineR,
-    stats
+    stats,
+    tidyverse,
+    ggplot2,
+    tibble,
+    gridExtra
 Authors@R:
     c(person("Sevvandi", "Kandanaarachchi", email="sevvandi.kandanaarachchi@monash.edu", role="aut"),
     person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
