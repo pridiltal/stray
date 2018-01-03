@@ -1,0 +1,34 @@
+Package: stray
+Type: Package
+Title: Robust Anomaly Detection in Data Streams with Concept Drift
+Version: 0.1.0
+Imports: HDoutliers,
+    FNN,
+    FactoMineR,
+    stats
+Authors@R:
+    c(person("Sevvandi", "Kandanaarachchi", email="sevvandi.kandanaarachchi@monash.edu", role="aut"),
+    person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
+    person("Mario", "Munoz", email="mario.munoz@monash.edu", role="aut"),
+    person("Kate", "Smith-Miles", email="kate.smith-miles@monash.edu", role="aut"),
+    person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role="aut"))
+Author: Sevvandi Kandanaarachchi [aut]
+    Priyanga Dilini Talagala [aut]
+    Mario A. Munoz [aut]
+    Kate Smith-Miles [aut]
+    Rob J. Hyndman [aut]
+Maintainer: Priyanga Dilini Talagala <dilini.talagala@monash.edu>
+Description:
+    This package is a modification of HDoutliers package. HDoutliers is a powerful algorithm for the 
+    detection of anomalous observations in a dataset, which has (among other advantages) the ability 
+    to detect clusters of outliers in multi-dimensional data without requiring a model of the typical
+    behavior of the system. However, it suffers from some limitations that affect its accuracy. In
+    this package, we propose solutions to  the limitations of HDoutliers, and propose an extension 
+    of the algorithm to deal with data streams that exhibit non-stationary behavior. The results show 
+    that our proposed algorithm improves the accuracy, and enables the trade-off between false 
+    positives and negatives to be better balanced.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+
