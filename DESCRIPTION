@@ -2,6 +2,7 @@ Package: stray
 Type: Package
 Title: Robust Anomaly Detection in Data Streams with Concept Drift
 Version: 0.1.0
+Depends: R (>= 3.4.1)
 Imports: HDoutliers,
     FNN,
     FactoMineR,
