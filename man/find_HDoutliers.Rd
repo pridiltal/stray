@@ -44,10 +44,14 @@ data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
 df <- tibble::tibble(index = rep(0, length(data)), data = data)
 data_out <- find_HDoutliers(data)
 data_plot <- ggplot(df, aes(x = data, y = index)) +
-geom_point() + xlab("x") + ylab("") +  ggtitle("Original Data")
+geom_point() +
+xlab("x") +
+ylab("") +
+ggtitle("Original Data")
 output_plot <- data_plot +
 geom_point(data = df[data_out, ], aes(x = data, y = index),
-colour = "red", size = 3) + ggtitle("Output")
+colour = "red", size = 3) +
+ggtitle("Output")
 gridExtra::grid.arrange(data_plot, output_plot)
 }
 
