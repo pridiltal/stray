@@ -23,24 +23,47 @@
 #' @importFrom FactoMineR MCA
 #' @importFrom gridExtra grid.arrange
 #' @importFrom tibble tibble
+#' @importFrom dplyr bind_rows
 #' @import ggplot2
 #' @import stats
 #' @references {Wilkinson, L. (2016). Visualizing outliers.}
 #' @examples
+#' require(ggplot2)
+#' set.seed(1234)
+#' data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
+#' df <- tibble::tibble( index = rep(0, length(data)), data = data)
+#' data_plot <- ggplot(df, aes(x = data, y= index)) +
+#' geom_point() +
+#' xlab("x") +
+#' ylab("") +
+#' ggtitle("Original Data")
+#' data_out <- find_HDoutliers(data)
+#' output_plot  <- data_plot +
+#' geom_point(data = df[data_out, ], aes(x=data, y = index),
+#' colour = "red", size = 3) +
+#' xlab("x") +
+#' ylab("") +
+#' ggtitle("Output")
+#' gridExtra::grid.arrange(data_plot, output_plot )
 #'
+#'
+#' set.seed(1234)
 #' n <- 1000 # number of observations
-#' set.seed(3)
-#' x <- matrix(rnorm(2*n),n,2)
-#' nout <- 8 # number of outliers
-#' out.vals <- 10*runif(2*nout,min=-1,max=1)
-#' out.positions <- sample(1:n,size=nout)
-#' x[out.positions,] <- out.vals
-#' plot(x, pch=20, main="Original Data", col="blue")
-#' out.W <- find_HDoutliers(x)
-#' x[out.W,]
-#' plot(x[-out.W,], pch=20, col="blue", main="Modified Algorithm", xlim=c(min(x[,1]), max(x[,1])),
-#'      ylim=c(min(x[,2]), max(x[,2])), xlab="x", ylab="y" )
-#' points( x[out.W,1], x[out.W,2],  col="darkgreen", pch=15)
+#' nout <- 10 # number of outliers
+#' typical_data <- tibble::as.tibble(matrix(rnorm(2*n), ncol = 2, byrow = TRUE))
+#' out <- tibble::as.tibble(matrix(5*runif(2*nout,min=-5,max=5), ncol = 2, byrow = TRUE))
+#' data <- dplyr::bind_rows(out, typical_data )
+#' data_out <- find_HDoutliers(data)
+#' data_plot <- ggplot(data, aes(x=V1, y= V2))+
+#' geom_point() +
+#' ggtitle("Original Data")+
+#' theme(aspect.ratio = 1)
+#' output_plot <- data_plot +
+#' geom_point(data = data[data_out, ], aes(x=V1, y = V2),
+#' colour = "red", size = 3) +
+#' ggtitle("Output")
+#' gridExtra::grid.arrange(data_plot, output_plot , nrow=1 )
+
 find_HDoutliers <- function(data, maxrows = 10000, radius = NULL, alpha = 0.05, l=0.2){
   # look for categorical variables
   if (is.null(dim(data))) {

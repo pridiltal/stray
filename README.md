@@ -56,4 +56,29 @@ output_plot  <- data_plot +
 gridExtra::grid.arrange(data_plot, output_plot )
 ```
 
-![](README-unnamed-chunk-2-1.png)
+![](README-onedim-1.png)
+
+two dimentional dataset with 8 outliers
+---------------------------------------
+
+``` r
+
+set.seed(1234)
+n <- 1000 # number of observations
+nout <- 10 # number of outliers
+typical_data <- tibble::as.tibble(matrix(rnorm(2*n), ncol = 2, byrow = TRUE))
+out <- tibble::as.tibble(matrix(5*runif(2*nout,min=-5,max=5), ncol = 2, byrow = TRUE))
+data <- dplyr::bind_rows(out, typical_data )
+data_out <- find_HDoutliers(data)
+data_plot <- ggplot(data, aes(x=V1, y= V2))+
+  geom_point() +
+  ggtitle("Original Data")+
+  theme(aspect.ratio = 1)
+output_plot <- data_plot +
+  geom_point(data = data[data_out, ], aes(x=V1, y = V2),
+             colour = "red", size = 3) +
+  ggtitle("Output")
+gridExtra::grid.arrange(data_plot, output_plot , nrow=1 )
+```
+
+![](README-twodim-1.png)

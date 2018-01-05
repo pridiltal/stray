@@ -10,7 +10,8 @@ Imports: HDoutliers,
     tidyverse,
     ggplot2,
     tibble,
-    gridExtra
+    gridExtra,
+    dplyr
 Authors@R:
     c(person("Sevvandi", "Kandanaarachchi", email="sevvandi.kandanaarachchi@monash.edu", role="aut"),
     person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
