@@ -31,7 +31,7 @@
 #' require(ggplot2)
 #' set.seed(1234)
 #' data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
-#' df <- tibble::tibble( index = rep(0, length(data)), data = data)
+#' df <- data.frame( index = rep(0, length(data)), data = data)
 #' data_plot <- ggplot(df, aes(x = data, y= index)) +
 #' geom_point() +
 #' xlab("x") +
