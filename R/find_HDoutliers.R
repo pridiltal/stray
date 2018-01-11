@@ -120,12 +120,15 @@ data <- as.matrix(data)
 
 k <- ceiling(length(exemplars)[1] / 20)
 
-d_knn <- FNN::knn.dist(data[exemplars, ], k )
-d_knn1<-cbind(rep(0, nrow(d_knn)), d_knn)
-diff<- t(apply(d_knn1, 1, diff))
-max_diff <- apply(diff, 1, which.max)
-d<-d_knn[cbind(1:nrow(d_knn), max_diff)]
-
+if(k==1){
+  d <- as.vector(FNN::knn.dist(data[exemplars, ], 1 ))
+} else{
+  d_knn <- FNN::knn.dist(data[exemplars, ], k )
+  d_knn1<-cbind(rep(0, nrow(d_knn)), d_knn)
+  diff<- t(apply(d_knn1, 1, diff))
+  max_diff <- apply(diff, 1, which.max)
+  d<-d_knn[cbind(1:nrow(d_knn), max_diff)]
+}
 n <- length(d)
 ord <- order(d)
 gaps <- c(0, diff(d[ord]))
@@ -133,7 +136,7 @@ n4 <- max(min(50, floor(n/4)), 2)
 J <- 1:n4
 start <- max(floor(n/2), 1) + 1
 ghat <- numeric(n)
-for (i in start:n) ghat[i] <- sum((J/n4) * gaps[i - J ]) # check i - j +1
+for (i in start:n) ghat[i] <- sum((J/n4) * gaps[i - J+1 ]) # check i - j +1
 logAlpha <- log(1/alpha)
 use <- start:n
 bound <- Inf

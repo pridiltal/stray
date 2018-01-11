@@ -4,3 +4,4 @@
 ^logo\.png$
 ^README-.*\.png$
 ^\.travis\.yml$
+^README\.html$
