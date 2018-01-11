@@ -4,7 +4,7 @@
 \alias{get_outliers}
 \title{Detect Anomalies Based on the Maximum k-Nearest Neighbour Differences.}
 \usage{
-get_outliers(data, memberLists, alpha = 0.05, l = 0.2)
+get_outliers(data, memberLists, alpha = 0.05)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -17,9 +17,6 @@ exemplar representing that list, and any remaining indexes are the associated me
 \item{alpha}{Threshold for determining the cutoff for outliers. Observations are considered outliers
 outliers if they fall in the (1- alpha) tail of the distribution of the nearest-neighbor distances
 between exemplars.}
-
-\item{l}{A parameter the user can choose to obtain a trade off between the false positives and
-the false negatives.}
 }
 \value{
 The indexes of the observations determined to be outliers.

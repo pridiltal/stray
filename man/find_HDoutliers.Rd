@@ -4,8 +4,7 @@
 \alias{find_HDoutliers}
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
-find_HDoutliers(data, maxrows = 10000, radius = NULL, alpha = 0.05,
-  l = 0.2)
+find_HDoutliers(data, maxrows = 10000, radius = NULL, alpha = 0.05)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -21,8 +20,6 @@ if its distance to that \emph{exemplar} is less than \code{radius}. The default 
 \item{alpha}{Threshold for determining the cutoff for outliers. Observations are considered
 outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 distances between exemplars.}
-
-\item{l}{A user defined parameter to obtain a trade off between the false positives and the false negatives.}
 }
 \value{
 The indexes of the observations determined to be outliers.

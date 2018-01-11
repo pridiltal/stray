@@ -12,7 +12,6 @@
 #' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
 #'  outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
-#' @param l A user defined parameter to obtain a trade off between the false positives and the false negatives.
 #' @return The indexes of the observations determined to be outliers.
 #' @details If the number of observations exceeds \code{maxrows}, the data is first partitioned into lists
 #' associated with \emph{exemplars} and their \emph{members} within \code{radius} of each \emph{exemplar}, to
@@ -64,7 +63,7 @@
 #' ggtitle("Output")
 #' gridExtra::grid.arrange(data_plot, output_plot , nrow=1 )
 
-find_HDoutliers <- function(data, maxrows = 10000, radius = NULL, alpha = 0.05, l=0.2){
+find_HDoutliers <- function(data, maxrows = 10000, radius = NULL, alpha = 0.05){
 # look for categorical variables
 if (is.null(dim(data))) {
   CAT <- !is.numeric(data)
@@ -90,7 +89,7 @@ unitize <- function(z) {
 
 udata <- apply(as.matrix(data), 2, unitize)
 members <- HDoutliers::getHDmembers(udata, radius = radius, maxrows = maxrows)
-get_outliers(udata, members, alpha = alpha, l = l)
+get_outliers(udata, members, alpha = alpha)
 }
 
 
@@ -107,13 +106,11 @@ get_outliers(udata, members, alpha = alpha, l = l)
 #' @param alpha Threshold for determining the cutoff for outliers. Observations are considered outliers
 #'  outliers if they fall in the (1- alpha) tail of the distribution of the nearest-neighbor distances
 #'  between exemplars.
-#' @param l A parameter the user can choose to obtain a trade off between the false positives and
-#'  the false negatives.
 #' @return  The indexes of the observations determined to be outliers.
 #' @export
 #' @importFrom FNN knn.dist
 #' @seealso \code{\link[HDoutliers]{getHDmembers}},  \code{\link{find_HDoutliers}}
-get_outliers <- function(data, memberLists, alpha = 0.05, l = 0.2) {
+get_outliers <- function(data, memberLists, alpha = 0.05) {
 
 exemplars <- sapply(memberLists, function(x) x[[1]])
 data <- as.matrix(data)
