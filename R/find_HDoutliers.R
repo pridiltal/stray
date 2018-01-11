@@ -129,7 +129,7 @@ n4 <- max(min(50, floor(n/4)), 2)
 J <- 1:n4
 start <- max(floor(n/2), 1) + 1
 ghat <- numeric(n)
-for (i in start:n) ghat[i] <- sum((J/n4) * gaps[i - J + 1])
+for (i in start:n) ghat[i] <- sum((J/n4) * gaps[i - J ]) # check i - j +1
 logAlpha <- log(1/alpha)
 use <- start:n
 bound <- Inf
