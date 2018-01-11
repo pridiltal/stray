@@ -11,7 +11,8 @@ Imports: HDoutliers,
     ggplot2,
     tibble,
     gridExtra,
-    dplyr
+    dplyr,
+    purrr
 Authors@R:
     c(person("Sevvandi", "Kandanaarachchi", email="sevvandi.kandanaarachchi@monash.edu", role="aut"),
     person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
