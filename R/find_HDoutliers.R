@@ -117,10 +117,14 @@ get_outliers <- function(data, memberLists, alpha = 0.05, l = 0.2) {
 
 exemplars <- sapply(memberLists, function(x) x[[1]])
 data <- as.matrix(data)
+
 k <- ceiling(length(exemplars)[1] / 20)
 
 d_knn <- FNN::knn.dist(data[exemplars, ], k )
-d<- apply(d_knn, 1, max)
+d_knn1<-cbind(rep(0, nrow(d_knn)), d_knn)
+diff<- t(apply(d_knn1, 1, diff))
+max_diff <- apply(diff, 1, which.max)
+d<-d_knn[cbind(1:nrow(d_knn), max_diff)]
 
 n <- length(d)
 ord <- order(d)
