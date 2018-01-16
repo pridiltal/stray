@@ -63,7 +63,7 @@
 #' ggtitle("Output")
 #' gridExtra::grid.arrange(data_plot, output_plot , nrow=1 )
 
-find_HDoutliers <- function(data, maxrows = 10000, radius = NULL, alpha = 0.05){
+find_HDoutliers <- function(data, maxrows = 10000, radius = NULL, alpha = 0.01){
 # look for categorical variables
 if (is.null(dim(data))) {
   CAT <- !is.numeric(data)
@@ -103,7 +103,7 @@ get_outliers(udata, members, alpha = alpha)
 #' which each component is a vector of observation indexes. The first index in each list is the index of the
 #' exemplar representing that list, and any remaining indexes are the associated members, considered
 #' 'close to' the exemplar.
-#' @param alpha Threshold for determining the cutoff for outliers. Observations are considered outliers
+#' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
 #'  outliers if they fall in the (1- alpha) tail of the distribution of the nearest-neighbor distances
 #'  between exemplars.
 #' @return  The indexes of the observations determined to be outliers.
@@ -111,7 +111,7 @@ get_outliers(udata, members, alpha = alpha)
 #' @importFrom FNN knn.dist
 #' @importFrom purrr flatten
 #' @seealso \code{\link[HDoutliers]{getHDmembers}},  \code{\link{find_HDoutliers}}
-get_outliers <- function(data, memberLists, alpha = 0.05) {
+get_outliers <- function(data, memberLists, alpha = 0.01) {
 
   if(length(memberLists)==1){
     out = NULL
