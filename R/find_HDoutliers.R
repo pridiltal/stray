@@ -138,8 +138,9 @@ get_outliers <- function(data, memberLists, alpha = 0.05) {
       d_knn <- FNN::knn.dist(data[exemplars, ], k )
       d_knn1<-cbind(rep(0, nrow(d_knn)), d_knn)
       diff<- t(apply(d_knn1, 1, diff))
-      max_diff <- apply(diff, 1, which.max)
-      d<-d_knn[cbind(1:nrow(d_knn), max_diff)]
+      #max_diff <- apply(diff, 1, which.max)
+      #d<-d_knn[cbind(1:nrow(d_knn), max_diff)]
+      d <- apply(diff, 1, max)
     }
     n <- length(d)
     ord <- order(d)
