@@ -156,24 +156,25 @@ get_outliers <- function(data, memberLists, alpha = 0.05) {
     for (i in start:n) {
       if (gaps[i] > logAlpha * ghat[i]) {
         bound <- d[ord][i - 1]
-        outlier.condition<- TRUE
+       # outlier.condition<- TRUE
         break
       }
     }
 
-    if(outlier.condition){
-      pending.outlier.index<- i: length(gaps)
-      pending.outlier.vals <- gaps[pending.outlier.index]
-      num.pending.outliers <- length(pending.outlier.index)
-      spacing.index <- pending.outlier.index[which.max(pending.outlier.vals *
-                                                         (num.pending.outliers:1))]:length(gaps)
-     ex1<-ord[spacing.index]
-      ex<- exemplars[ex1]
+   # if(outlier.condition){
+    #  pending.outlier.index<- i: length(gaps)
+    #  pending.outlier.vals <- gaps[pending.outlier.index]
+    #  num.pending.outliers <- length(pending.outlier.index)
+    #  spacing.index <- pending.outlier.index[which.max(pending.outlier.vals *
+          #                                               (num.pending.outliers:1))]:length(gaps)
+     #ex1<-ord[spacing.index]
+    #  ex<- exemplars[ex1]
 
 
-    } else {
+    #} else {
     ex <- exemplars[which(d > bound)]
-    }
+
+    #}
     mem1 <- sapply(memberLists, function(x) x[1])
     out <- unlist(memberLists[match(ex, mem1)])
     names(out) <- NULL
