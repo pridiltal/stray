@@ -146,7 +146,7 @@ get_outliers <- function(data, memberLists, alpha = 0.01) {
     ord <- order(d)
     gaps <- c(0, diff(d[ord]))
     n4 <- max(min(50, floor(n/4)), 2)
-    J <- 2:n4
+    J <- 1:n4
     start <- max(floor(n/2), 1) + 1
     ghat <- numeric(n)
     for (i in start:n) ghat[i] <- sum((J/(n4-1)) * gaps[i - J+1 ]) # check i - j +1
