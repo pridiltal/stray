@@ -81,10 +81,11 @@ if (any(CAT)) {
 }
 
 unitize <- function(z) {
-  zrange <- range(z)
-  if(!(dif<- diff(zrange)))
-  return(rep(0, length(z)))
-  (z-zrange[1])/dif
+  #zrange <- range(z)
+  #if(!(dif<- diff(zrange)))
+  #return(rep(0, length(z)))
+  #(z-zrange[1])/dif
+  (z-median(z))/IQR(z)
 }
 
 udata <- apply(as.matrix(data), 2, unitize)
