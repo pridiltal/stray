@@ -80,17 +80,13 @@ if (any(CAT)) {
    data[,CAT] <- sapply(data[, CAT, drop = F], function(x) FactoMineR::MCA(as.matrix(x), ncp = 1, graph = F)$ind$coord)
 }
 
-unitize <- function(z) {
-  #zrange <- range(z)
-  #if(!(dif<- diff(zrange)))
-  #return(rep(0, length(z)))
-  #(z-zrange[1])/dif
+standardize <- function(z) {
   (z-median(z))/IQR(z)
 }
 
-udata <- apply(as.matrix(data), 2, unitize)
-members <- HDoutliers::getHDmembers(udata, radius = radius, maxrows = maxrows)
-get_outliers(udata, members, alpha = alpha)
+zdata <- apply(as.matrix(data), 2, standardize)
+members <- HDoutliers::getHDmembers(zdata, radius = radius, maxrows = maxrows)
+get_outliers(zdata, members, alpha = alpha)
 }
 
 
