@@ -4,7 +4,7 @@
 \alias{find_HDoutliers}
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
-find_HDoutliers(data, maxrows = 10000, radius = NULL, alpha = 0.01)
+find_HDoutliers(data, maxrows = 1000, radius = NULL, alpha = 0.01)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -71,7 +71,9 @@ ggtitle("Output")
 gridExtra::grid.arrange(data_plot, output_plot , nrow=1 )
 }
 \references{
-{Wilkinson, L. (2016). Visualizing outliers.}
+{Wilkinson, L. (2018), `Visualizing big data
+outliers through distributed aggregation', IEEE
+transactions on visualization and computer graphics 24(1), 256-266.}
 }
 \seealso{
 \code{\link[HDoutliers]{getHDmembers}},  \code{\link{get_outliers}}

@@ -25,7 +25,9 @@
 #' @import tibble
 #' @import ggplot2
 #' @import stats
-#' @references {Wilkinson, L. (2016). Visualizing outliers.}
+#' @references {Wilkinson, L. (2018), `Visualizing big data
+#' outliers through distributed aggregation', IEEE
+#' transactions on visualization and computer graphics 24(1), 256-266.}
 #' @examples
 #' require(ggplot2)
 #' set.seed(1234)
@@ -63,7 +65,7 @@
 #' ggtitle("Output")
 #' gridExtra::grid.arrange(data_plot, output_plot , nrow=1 )
 
-find_HDoutliers <- function(data, maxrows = 10000, radius = NULL, alpha = 0.01){
+find_HDoutliers <- function(data, maxrows = 1000, radius = NULL, alpha = 0.01){
 # look for categorical variables
 if (is.null(dim(data))) {
   CAT <- !is.numeric(data)
@@ -85,7 +87,7 @@ standardize <- function(z) {
 }
 
 zdata <- apply(as.matrix(data), 2, standardize)
-members <- HDoutliers::getHDmembers(zdata, radius = radius, maxrows = maxrows)
+members <- get_leader_cluster(zdata, radius = radius, maxrows = maxrows)
 get_outliers(zdata, members, alpha = alpha)
 }
 
@@ -177,5 +179,74 @@ get_outliers <- function(data, memberLists, alpha = 0.01) {
     names(out) <- NULL
     return(out)
   }
+}
+
+
+
+#' Form clusters of datapoints using Hartigan's Leader Algorithm.
+#'
+#' @description  Form clusters of datapoints using Hartigan's Leader Algorithm. This is a modification of
+#' \code{\link[HDoutliers]{getHDmembers}}.
+#' @param data A vector, matrix, or data frame consisting of numeric and/or categorical variables.
+#' @param maxrows If the number of observations is greater than \code{maxrows}, \code{outliers} reduces the
+#'  number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 10000.
+#' @param radius Threshold for determining membership in the \emph{exemplars}'s lists (used only when the
+#' number of observations is greater than \eqn{maxrows}). An observation is added to an \emph{exemplars}'s lists
+#' if its distance to that \emph{exemplar} is less than \code{radius}. The default value is \eqn{1/2(1/n)^(1/p)},
+#'  where \eqn{n} is the number of observations and \eqn{p} is the dimension of the data.
+#' @return  A list in which each component is a vector of
+#' observation indexes. The first index in each list is the
+#' index of the exemplar defining that list, and any remaining indexes are the associated members, within radius of the exemplar.
+#' @export
+#' @importFrom mclust partuniq
+#' @importFrom FNN get.knnx
+#' @seealso \code{\link[HDoutliers]{getHDmembers}}
+#' @references {Hartigan, John A. "Clustering algorithms." (1975).}
+#' @references {Kantardzic, Mehmed. Data mining: concepts, models, methods, and algorithms.
+#'  John Wiley & Sons, 2011.}
+get_leader_cluster <- function( data, maxrows = 10000, radius = NULL)
+{
+  data <- as.matrix(data)
+  n <- nrow(data)
+  p <- ncol(data)
+  if (is.null(radius))
+   # radius <- 0.1/(log(n)^(1/p))
+    radius <- 1/2*((1/n)^(1/p))
+  if (n <= maxrows) {
+    cl <- mclust::partuniq(data)
+    U <- unique(cl)
+    m <- length(U)
+    if (m != n) {
+      members <- rep(list(NULL), m)
+      j <- 0
+      for (u in U) {
+        j <- j + 1
+        members[[j]] <- which(cl == u)
+      }
+    }
+    else members <- as.list(1:n)
+  }
+  else {
+    members <- rep(list(NULL), n)
+    exemplars <- 1
+    members[[1]] <- 1
+    for (i in 2:n) {
+      KNN <- FNN::get.knnx(data = data[exemplars, , drop = F],
+                      query = data[i, , drop = F], k = 1)
+      m <- KNN$nn.index[1, 1]
+      d <- KNN$nn.dist[1, 1]
+      if (d < radius) {
+        l <- exemplars[m]
+        members[[l]] <- c(members[[l]], i)
+        next
+      }
+      exemplars <- c(exemplars, i)
+      members[[i]] <- i
+    }
+  }
+  members <- members[!sapply(members, is.null)]
+  exemplars <- sapply(members, function(x) x[[1]])
+  names(members) <- exemplars
+  members
 }
 
