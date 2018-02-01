@@ -28,6 +28,9 @@ Form clusters of datapoints using Hartigan's Leader Algorithm. This is a modific
 }
 \references{
 {Hartigan, John A. "Clustering algorithms." (1975).}
+
+{Kantardzic, Mehmed. Data mining: concepts, models, methods, and algorithms.
+ John Wiley & Sons, 2011.}
 }
 \seealso{
 \code{\link[HDoutliers]{getHDmembers}}
