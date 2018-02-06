@@ -211,7 +211,7 @@ get_leader_cluster <- function( data, maxrows = 10000, radius = NULL)
   p <- ncol(data)
   if (is.null(radius))
    # radius <- 0.1/(log(n)^(1/p))
-    radius <- 1/2*((1/n)^(1/p))
+    radius <- 1/(2*((1/n)^(1/p)))
   if (n <= maxrows) {
     cl <- mclust::partuniq(data)
     U <- unique(cl)
