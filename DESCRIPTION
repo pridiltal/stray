@@ -1,7 +1,7 @@
 Package: stray
 Type: Package
 Title: Robust Anomaly Detection in Data Streams with Concept Drift
-Version: 0.1.0
+Version: 1.0.0.9000
 Depends: R (>= 3.4.1)
 Imports: HDoutliers,
     FNN,
@@ -13,7 +13,8 @@ Imports: HDoutliers,
     gridExtra,
     dplyr,
     purrr,
-    mclust
+    mclust,
+    tourr(>= 0.5.5.9000)
 Authors@R:
     c(person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
     person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("aut", "ths")),
