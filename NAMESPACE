@@ -2,7 +2,6 @@
 
 export(find_HDoutliers)
 export(get_leader_cluster)
-export(get_outliers)
 import(ggplot2)
 import(stats)
 import(tibble)

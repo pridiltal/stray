@@ -4,18 +4,13 @@
 \alias{find_HDoutliers}
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
-find_HDoutliers(data, maxrows = 1000, radius = NULL, alpha = 0.01)
+find_HDoutliers(data, maxrows = 1000, alpha = 0.01)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
 
 \item{maxrows}{If the number of observations is greater than \code{maxrows}, \code{outliers} reduces the
 number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 10000.}
-
-\item{radius}{Threshold for determining membership in the \emph{exemplars}'s lists (used only when the
-number of observations is greater than \eqn{maxrows}). An observation is added to an \emph{exemplars}'s lists
-if its distance to that \emph{exemplar} is less than \code{radius}. The default value is \eqn{.1/(log n)^(1/p)},
- where \eqn{n} is the number of observations and \eqn{p} is the dimension of the data.}
 
 \item{alpha}{Threshold for determining the cutoff for outliers. Observations are considered
 outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
@@ -76,5 +71,5 @@ outliers through distributed aggregation', IEEE
 transactions on visualization and computer graphics 24(1), 256-266.}
 }
 \seealso{
-\code{\link[HDoutliers]{getHDmembers}},  \code{\link{get_outliers}}
+\code{\link{get_leader_cluster}}
 }

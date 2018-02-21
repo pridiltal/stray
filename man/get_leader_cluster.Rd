@@ -4,18 +4,13 @@
 \alias{get_leader_cluster}
 \title{Form clusters of datapoints using Hartigan's Leader Algorithm.}
 \usage{
-get_leader_cluster(data, maxrows = 10000, radius = NULL)
+get_leader_cluster(data, maxrows = 1000)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
 
 \item{maxrows}{If the number of observations is greater than \code{maxrows}, \code{outliers} reduces the
-number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 10000.}
-
-\item{radius}{Threshold for determining membership in the \emph{exemplars}'s lists (used only when the
-number of observations is greater than \eqn{maxrows}). An observation is added to an \emph{exemplars}'s lists
-if its distance to that \emph{exemplar} is less than \code{radius}. The default value is \eqn{1/2(1/n)^(1/p)},
- where \eqn{n} is the number of observations and \eqn{p} is the dimension of the data.}
+number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 1000.}
 }
 \value{
 A list in which each component is a vector of
