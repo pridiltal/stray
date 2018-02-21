@@ -63,7 +63,7 @@
 #' ggtitle("Output")
 #' gridExtra::grid.arrange(data_plot, output_plot , nrow=1 )
 find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01){
-standardize <- function(z) (z-median(z))/IQR(z)
+standardize <- function(z) {(z-median(z))/IQR(z)}
 data <- as.matrix(data)
 zdata <- apply(data, 2, standardize)
 members <- get_leader_cluster(zdata, maxrows = maxrows)
@@ -85,9 +85,9 @@ if(length(members)==1){
 
   k <- ceiling(length(exemplars)/ 20)
   if(k==1){
-    d <- as.vector(FNN::knn.dist(data[exemplars, ], 1 ))
+    d <- as.vector(FNN::knn.dist(zdata[exemplars, ], 1 ))
   } else{
-    d_knn <- FNN::knn.dist(data[exemplars, ], k )
+    d_knn <- FNN::knn.dist(zdata[exemplars, ], k )
     d_knn1 <-cbind(rep(0, nrow(d_knn)), d_knn)
     diff <- t(apply(d_knn1, 1, diff))
     max_diff <- apply(diff, 1, which.max)
