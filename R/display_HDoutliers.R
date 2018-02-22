@@ -16,14 +16,22 @@
 display_HDoutliers <- function(data, outliers, col, pch) {
   data <- tibble::as.tibble(data)
   d <- ncol(data)
-  outcon <- as.factor(ifelse(1:nrow(data) %in% outliers,
+  n <- nrow(data)
+  outcon <- as.factor(ifelse(1:n %in% outliers,
                              "outlier", "non_outlier"))
   data <-dplyr::mutate(data, outcon)
   if(d==1) {
 
     pal <- colorspace::rainbow_hcl(length(levels(data$outcon)))
     col <- pal[as.numeric(data$outcon)]
-    print("one dimensional plot")
+    data <-dplyr::mutate(data, index = rep(0, n))
+    colnames(data) <- c("value", "outcon", "index")
+    out_display <- ggplot(data, aes_string(x = "value", y= "index", colour = "outcon")) +
+     geom_point() +
+     scale_colour_manual(name = "Type",
+                         values = c("outlier" = "red",
+                                    "non_outlier"= "black"))
+    print(out_display)
   } else if (d==2){
     print("two dimensional plot")
   } else {
