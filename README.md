@@ -73,6 +73,7 @@ High dimensionl data
 ``` r
 require(tourr)
 outpoints <- matrix(rnorm(12, mean=200), nrow = 2)
+colnames(outpoints) <- colnames(flea[,-7])
 data <- rbind(flea[,-7], outpoints)
 outliers <- find_HDoutliers(data)
 display_HDoutliers(data, outliers)

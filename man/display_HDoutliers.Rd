@@ -20,3 +20,12 @@ outliers by \code{\link[stray]{find_HDoutliers}}}
 \description{
 Animate a 2D tour path with a scatterplot to visualize outliers.
 }
+\examples{
+\dontrun{
+require(tourr)
+outpoints <- matrix(rnorm(12, mean=200), nrow = 2)
+colnames(outpoints) <- colnames(flea[,-7])
+data <- rbind(flea[,-7], outpoints)
+outliers <- find_HDoutliers(data)
+display_HDoutliers(data, outliers)}
+}
