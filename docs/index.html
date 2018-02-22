@@ -70,7 +70,73 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#stray" class="anchor"></a>stray <img src="logo.png" align="right" height="150">
 </h1></div>
-<p>[![Project Status: Active</p>
+
+<hr>
+<p><a href="https://cran.r-project.org/"><img src="https://img.shields.io/badge/R%3E%3D-3.4.1-6666ff.svg" alt="minimal R version"></a> <a href="https://cran.r-project.org/package=stray"><img src="http://www.r-pkg.org/badges/version/stray" alt="CRAN_Status_Badge"></a> <a href="commits/master"><img src="https://img.shields.io/badge/Package%20version-1.0.0.9000-orange.svg?style=flat-square" alt="packageversion"></a></p>
+<hr>
+<p><a href="/commits/master"><img src="https://img.shields.io/badge/last%20change-2018--02--22-yellowgreen.svg" alt="Last-changedate"></a></p>
+<hr>
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+</div>
+<div id="stray-stream-anomaly" class="section level1">
+<h1 class="hasAnchor">
+<a href="#stray-stream-anomaly" class="anchor"></a>stray {STReam AnomalY}</h1>
+<p>Robust Anomaly Detection in Data Streams with Concept Drift</p>
+<p>This package is a modification of <a href="https://cran.r-project.org/web/packages/HDoutliers/index.html">HDoutliers package</a>. HDoutliers is a powerful algorithm for the detection of anomalous observations in a dataset, which has (among other advantages) the ability to detect clusters of outliers in multi-dimensional data without requiring a model of the typical behavior of the system. However, it suffers from some limitations that affect its accuracy. In this package, we propose solutions to the limitations of HDoutliers, and propose an extension of the algorithm to deal with data streams that exhibit non-stationary behavior. The results show that our proposed algorithm improves the accuracy, and enables the trade-off between false positives and negatives to be better balanced.</p>
+<p>This package is still under development and this repository contains a development version of the R package <em>stray</em>.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>You can install oddstream from github with:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"pridiltal/stray"</span>)</code></pre></div>
+</div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
+<p>One dimensional data set with one outlier</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stray)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">set.seed</span>(<span class="dv">1234</span>)
+data &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="op">-</span><span class="dv">6</span>), <span class="dv">0</span>, <span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">6</span>))
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">index =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">length</span>(data)), <span class="dt">data =</span> data)
+data_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x =</span> data, <span class="dt">y=</span> index))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"x"</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">""</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Original Data"</span>)
+data_out &lt;-<span class="st"> </span><span class="kw"><a href="reference/find_HDoutliers.html">find_HDoutliers</a></span>(data)
+output_plot  &lt;-<span class="st"> </span>data_plot <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> df[data_out, ], <span class="kw">aes</span>(<span class="dt">x=</span>data, <span class="dt">y =</span> index), 
+             <span class="dt">colour =</span> <span class="st">"red"</span>, <span class="dt">size =</span> <span class="dv">3</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"x"</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">""</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Output"</span>)
+gridExtra<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/gridExtra/topics/arrangeGrob">grid.arrange</a></span>(data_plot, output_plot )</code></pre></div>
+<p><img src="README-onedim-1.png" width="672"></p>
+</div>
+<div id="two-dimentional-dataset-with-8-outliers" class="section level2">
+<h2 class="hasAnchor">
+<a href="#two-dimentional-dataset-with-8-outliers" class="anchor"></a>two dimentional dataset with 8 outliers</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">set.seed</span>(<span class="dv">1234</span>)
+n &lt;-<span class="st"> </span><span class="dv">1000</span> <span class="co"># number of observations</span>
+nout &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># number of outliers</span>
+typical_data &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tibble/topics/as_tibble">as.tibble</a></span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">2</span><span class="op">*</span>n), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>))
+out &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tibble/topics/as_tibble">as.tibble</a></span>(<span class="kw">matrix</span>(<span class="dv">5</span><span class="op">*</span><span class="kw">runif</span>(<span class="dv">2</span><span class="op">*</span>nout,<span class="dt">min=</span><span class="op">-</span><span class="dv">5</span>,<span class="dt">max=</span><span class="dv">5</span>), <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>))
+data &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(out, typical_data )
+data_out &lt;-<span class="st"> </span><span class="kw"><a href="reference/find_HDoutliers.html">find_HDoutliers</a></span>(data)
+data_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x=</span>V1, <span class="dt">y=</span> V2))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Original Data"</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)
+output_plot &lt;-<span class="st"> </span>data_plot <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> data[data_out, ], <span class="kw">aes</span>(<span class="dt">x=</span>V1, <span class="dt">y =</span> V2),
+             <span class="dt">colour =</span> <span class="st">"red"</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Output"</span>)
+gridExtra<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/gridExtra/topics/arrangeGrob">grid.arrange</a></span>(data_plot, output_plot , <span class="dt">nrow=</span><span class="dv">1</span> )</code></pre></div>
+<p><img src="README-twodim-1.png" width="672"></p>
+</div>
 </div>
 </div>
   </div>
@@ -84,6 +150,12 @@
 <li>Priyanga Dilini Talagala <br><small class="roles"> Author, maintainer </small> </li>
 <li>Rob J Hyndman <br><small class="roles"> Author, thesis advisor </small> </li>
 <li>Kate Smith-Miles <br><small class="roles"> Author, thesis advisor </small> </li>
+</ul>
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="http://www.repostatus.org/#wip"><img src="http://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP ? Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
+<li><a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"><img src="https://img.shields.io/badge/licence-GPL--2-blue.svg" alt="Licence"></a></li>
+<li><a href="https://travis-ci.org/pridiltal/stray"><img src="https://travis-ci.org/pridiltal/stray.svg?branch=master" alt="Build Status"></a></li>
 </ul>
 </div>
 
