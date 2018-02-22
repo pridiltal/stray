@@ -13,6 +13,14 @@
 #' @import ggplot2
 #' @import tourr
 #' @export
+#' @example
+#' \dontrun{
+#' require(tourr)
+#' outpoints <- matrix(rnorm(12, mean=200), nrow = 2)
+#' data <- rbind(flea[,-7], outpoints)
+#' outliers <- find_HDoutliers(data)
+#' display_HDoutliers(data, outliers)
+#' }
 display_HDoutliers <- function(data, outliers, col, pch) {
   data <- as.data.frame(data)
   d <- ncol(data)

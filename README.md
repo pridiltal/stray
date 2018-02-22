@@ -71,11 +71,9 @@ High dimensionl data
 --------------------
 
 ``` r
-library(tourr)
-data <- flea[,-7]
+require(tourr)
+outpoints <- matrix(rnorm(12, mean=200), nrow = 2)
+data <- rbind(flea[,-7], outpoints)
 outliers <- find_HDoutliers(data)
 display_HDoutliers(data, outliers)
-#> Using half_range 0.98
 ```
-
-![](README-highdim-1.png)![](README-highdim-2.png)
