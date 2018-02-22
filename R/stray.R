@@ -8,7 +8,8 @@
 #' non-stationary behavior. The results show that our proposed algorithm improves the accuracy, and enables the
 #' trade-off between false positives and negatives to be better balanced.
 #'
-#' @seealso The core functions in this package:  \code{\link{find_HDoutliers}}, \code{\link{get_leader_cluster}}
+#' @seealso The core functions in this package:  \code{\link{find_HDoutliers}}, \code{\link{get_leader_clusters}},
+#' \code{\link{display_HDoutliers}}
 #'
 #' Full documentation and demos:
 #' @references

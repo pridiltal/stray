@@ -51,5 +51,5 @@ outliers through distributed aggregation', IEEE
 transactions on visualization and computer graphics 24(1), 256-266.}
 }
 \seealso{
-\code{\link{get_leader_cluster}}
+\code{\link{get_leader_clusters}}
 }

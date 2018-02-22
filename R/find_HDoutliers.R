@@ -12,7 +12,7 @@
 #' @details If the number of observations exceeds \code{maxrows}, the data is first partitioned into lists
 #' associated with \emph{exemplars} and their \emph{members} within \code{radius} of each \emph{exemplar}, to
 #' reduce the number of k-nearest neighbor computations required for outlier detection.
-#' @seealso \code{\link{get_leader_cluster}}
+#' @seealso \code{\link{get_leader_clusters}}
 #' @export
 #' @importFrom HDoutliers getHDmembers
 #' @importFrom FactoMineR MCA
@@ -46,7 +46,7 @@ find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01){
 standardize <- function(z) {(z-median(z))/IQR(z)}
 data <- as.matrix(data)
 zdata <- apply(data, 2, standardize)
-members <- get_leader_cluster(zdata, maxrows = maxrows)
+members <- get_leader_clusters(zdata, maxrows = maxrows)
 
 if(length(members)==1){
   out = NULL
@@ -115,7 +115,7 @@ return(out)
 #' @references {Hartigan, John A. "Clustering algorithms." (1975).}
 #' @references {Kantardzic, Mehmed. Data mining: concepts, models, methods, and algorithms.
 #'  John Wiley & Sons, 2011.}
-get_leader_cluster <- function( data, maxrows = 1000)
+get_leader_clusters <- function( data, maxrows = 1000)
 {
 
   n <- nrow(data)

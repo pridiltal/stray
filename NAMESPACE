@@ -2,7 +2,7 @@
 
 export(display_HDoutliers)
 export(find_HDoutliers)
-export(get_leader_cluster)
+export(get_leader_clusters)
 import(ggplot2)
 import(stats)
 import(tibble)
