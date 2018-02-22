@@ -49,7 +49,7 @@ devtools::install_github("pridiltal/stray")
 ```
 ## Example
 
-One dimensional data set with one outlier
+### One dimensional data set with one outlier
 ```{r onedim, echo =TRUE, eval = TRUE}
 library(stray)
 require(ggplot2)
@@ -59,7 +59,7 @@ outliers <- find_HDoutliers(data)
 display_HDoutliers(data,outliers )
 ```
 
-## two dimentional dataset with 8 outliers
+### Two dimentional dataset with 8 outliers
 ```{r twodim, echo =TRUE, eval = TRUE}
 set.seed(1234)
 n <- 1000 # number of observations
@@ -72,7 +72,7 @@ display_HDoutliers(data, outliers)
 
 ```
 
-##High dimensionl data
+### High dimensionl data
 ```{r highdim, echo= TRUE, eval = FALSE}
 require(tourr)
 outpoints <- matrix(rnorm(12, mean=200), nrow = 2)

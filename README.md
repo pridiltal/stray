@@ -37,7 +37,7 @@ devtools::install_github("pridiltal/stray")
 Example
 -------
 
-One dimensional data set with one outlier
+### One dimensional data set with one outlier
 
 ``` r
 library(stray)
@@ -51,8 +51,7 @@ display_HDoutliers(data,outliers )
 
 ![](README-onedim-1.png)
 
-two dimentional dataset with 8 outliers
----------------------------------------
+### Two dimentional dataset with 8 outliers
 
 ``` r
 set.seed(1234)
@@ -67,8 +66,7 @@ display_HDoutliers(data, outliers)
 
 ![](README-twodim-1.png)
 
-High dimensionl data
---------------------
+### High dimensionl data
 
 ``` r
 require(tourr)
