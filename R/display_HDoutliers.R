@@ -21,12 +21,10 @@ display_HDoutliers <- function(data, outliers, col, pch) {
                              "outlier", "non_outlier"))
   data <-dplyr::mutate(data, outcon)
   if(d==1) {
-
-    pal <- colorspace::rainbow_hcl(length(levels(data$outcon)))
-    col <- pal[as.numeric(data$outcon)]
     data <-dplyr::mutate(data, index = rep(0, n))
     colnames(data) <- c("value", "outcon", "index")
-    out_display <- ggplot(data, aes_string(x = "value", y= "index", colour = "outcon")) +
+    out_display <- ggplot(data, aes_string(x = "value", y= "index",
+                                           colour = "outcon")) +
      geom_point() +
      scale_colour_manual(name = "Type",
                          values = c("outlier" = "red",
