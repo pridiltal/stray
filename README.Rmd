@@ -71,3 +71,11 @@ outliers <- find_HDoutliers(data)
 display_HDoutliers(data, outliers)
 
 ```
+
+##High dimensionl data
+```{r highdim, echo= TRUE, eval = TRUE}
+library(tourr)
+data <- flea[,-7]
+outliers <- find_HDoutliers(data)
+display_HDoutliers(data, outliers)
+```

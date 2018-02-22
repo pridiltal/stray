@@ -43,6 +43,8 @@ display_HDoutliers <- function(data, outliers, col, pch) {
 
     print(out_display)
   } else {
-    print("Have a tour")
+    pal <- colorspace::rainbow_hcl(length(levels(data$outcon)))
+    col <- pal[as.numeric(data$outcon)]
+    tourr::animate_xy(data[,-(d+1)], col=col)
   }
 }

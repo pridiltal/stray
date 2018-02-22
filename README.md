@@ -66,3 +66,16 @@ display_HDoutliers(data, outliers)
 ```
 
 ![](README-twodim-1.png)
+
+High dimensionl data
+--------------------
+
+``` r
+library(tourr)
+data <- flea[,-7]
+outliers <- find_HDoutliers(data)
+display_HDoutliers(data, outliers)
+#> Using half_range 0.98
+```
+
+![](README-highdim-1.png)![](README-highdim-2.png)
