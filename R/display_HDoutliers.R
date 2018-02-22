@@ -51,8 +51,7 @@ display_HDoutliers <- function(data, outliers, col, pch) {
 
     print(out_display)
   } else {
-    pal <- colorspace::rainbow_hcl(length(levels(data$outcon)))
-    col <- pal[as.numeric(data$outcon)]
+    col <- ifelse(1:n %in% outliers, "red", "black")
     tourr::animate_xy(data[,-(d+1)], col=col)
   }
 }
