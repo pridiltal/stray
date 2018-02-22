@@ -9,12 +9,12 @@
 #' @param col color to be plotted.  Defaults to "black"
 #' @param pch size of the point to be plotted.  Defaults to 20.
 #' @importFrom colorspace rainbow_hcl
-#' @importFrom tibble as.tibble
 #' @importFrom dplyr mutate
+#' @import ggplot2
 #' @import tourr
 #' @export
 display_HDoutliers <- function(data, outliers, col, pch) {
-  data <- tibble::as.tibble(data)
+  data <- as.data.frame(data)
   d <- ncol(data)
   n <- nrow(data)
   outcon <- as.factor(ifelse(1:n %in% outliers,
@@ -22,16 +22,26 @@ display_HDoutliers <- function(data, outliers, col, pch) {
   data <-dplyr::mutate(data, outcon)
   if(d==1) {
     data <-dplyr::mutate(data, index = rep(0, n))
-    colnames(data) <- c("value", "outcon", "index")
-    out_display <- ggplot(data, aes_string(x = "value", y= "index",
-                                           colour = "outcon")) +
-     geom_point() +
+    out_display <- ggplot(data) +
+     geom_point(aes_string(x = data[,1], y= data[,3], colour = data[,2])) +
      scale_colour_manual(name = "Type",
                          values = c("outlier" = "red",
-                                    "non_outlier"= "black"))
+                                    "non_outlier"= "black"))+
+      xlab("Value") +
+      ylab("")+
+      theme(axis.text.y=element_blank(),
+            axis.ticks.y=element_blank())
     print(out_display)
   } else if (d==2){
-    print("two dimensional plot")
+    out_display <- ggplot(data) +
+      geom_point(aes_string(x = data[,1], y= data[,2], colour = "outcon")) +
+      scale_colour_manual(name = "Type",
+                          values = c("outlier" = "red",
+                                     "non_outlier"= "black"))+
+      xlab("Variable 1") +
+      ylab("Variable 2")
+
+    print(out_display)
   } else {
     print("Have a tour")
   }

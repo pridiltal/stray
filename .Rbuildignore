@@ -6,3 +6,4 @@
 ^\.travis\.yml$
 ^README\.html$
 ^docs
+^\.RDataTmp

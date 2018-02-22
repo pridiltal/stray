@@ -30,20 +30,8 @@
 #' require(ggplot2)
 #' set.seed(1234)
 #' data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
-#' df <- tibble::tibble( index = rep(0, length(data)), data = data)
-#' data_plot <- ggplot(df, aes(x = data, y= index)) +
-#' geom_point() +
-#' xlab("x") +
-#' ylab("") +
-#' ggtitle("Original Data")
-#' data_out <- find_HDoutliers(data)
-#' output_plot  <- data_plot +
-#' geom_point(data = df[data_out, ], aes(x=data, y = index),
-#' colour = "red", size = 3) +
-#' xlab("x") +
-#' ylab("") +
-#' ggtitle("Output")
-#' gridExtra::grid.arrange(data_plot, output_plot )
+#' outliers <- find_HDoutliers(data)
+#' display_HDoutliers(data,outliers )
 #'
 #'
 #' set.seed(1234)
@@ -52,16 +40,8 @@
 #' typical_data <- tibble::as.tibble(matrix(rnorm(2*n), ncol = 2, byrow = TRUE))
 #' out <- tibble::as.tibble(matrix(5*runif(2*nout,min=-5,max=5), ncol = 2, byrow = TRUE))
 #' data <- dplyr::bind_rows(out, typical_data )
-#' data_out <- find_HDoutliers(data)
-#' data_plot <- ggplot(data, aes(x=V1, y= V2))+
-#' geom_point() +
-#' ggtitle("Original Data")+
-#' theme(aspect.ratio = 1)
-#' output_plot <- data_plot +
-#' geom_point(data = data[data_out, ], aes(x=V1, y = V2),
-#' colour = "red", size = 3) +
-#' ggtitle("Output")
-#' gridExtra::grid.arrange(data_plot, output_plot , nrow=1 )
+#' outliers <- find_HDoutliers(data)
+#' display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01){
 standardize <- function(z) {(z-median(z))/IQR(z)}
 data <- as.matrix(data)
