@@ -11,5 +11,12 @@
 #' @import tourr
 #' @export
 display_HDoutliers <- function(data, outliers, col, pch) {
-print("hi")
+  d <- ncol(as.matrix(data))
+  if(d==1) {
+    print("one dimensional plot")
+  } else if (d==2){
+    print("two dimensional plot")
+  } else {
+    print("Have a tour")
+  }
 }

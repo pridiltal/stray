@@ -14,7 +14,7 @@ Imports: HDoutliers,
     dplyr,
     purrr,
     mclust,
-    tourr(>= 0.5.5.9000)
+    tourr
 Authors@R:
     c(person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
     person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("aut", "ths")),
