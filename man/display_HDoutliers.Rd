@@ -4,7 +4,7 @@
 \alias{display_HDoutliers}
 \title{Display outliers with a scatterplot}
 \usage{
-display_HDoutliers(data, outliers, col, pch)
+display_HDoutliers(data, outliers)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric
@@ -12,10 +12,6 @@ and/or categorical variables.}
 
 \item{outliers}{A vector of indexes of the observations determined to be
 outliers by \code{\link[stray]{find_HDoutliers}}}
-
-\item{col}{color to be plotted.  Defaults to "black"}
-
-\item{pch}{size of the point to be plotted.  Defaults to 20.}
 }
 \description{
 Animate a 2D tour path with a scatterplot to visualize outliers.

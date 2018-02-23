@@ -6,10 +6,9 @@
 #' and/or categorical variables.
 #' @param outliers A vector of indexes of the observations determined to be
 #' outliers by \code{\link[stray]{find_HDoutliers}}
-#' @param col color to be plotted.  Defaults to "black"
-#' @param pch size of the point to be plotted.  Defaults to 20.
 #' @importFrom colorspace rainbow_hcl
 #' @importFrom dplyr mutate
+#' @importFrom animation saveGIF
 #' @import ggplot2
 #' @import tourr
 #' @export
@@ -21,7 +20,7 @@
 #' data <- rbind(flea[,-7], outpoints)
 #' outliers <- find_HDoutliers(data)
 #' display_HDoutliers(data, outliers)}
-display_HDoutliers <- function(data, outliers, col, pch) {
+display_HDoutliers <- function(data, outliers) {
   data <- as.data.frame(data)
   d <- ncol(data)
   n <- nrow(data)
@@ -52,6 +51,6 @@ display_HDoutliers <- function(data, outliers, col, pch) {
     print(out_display)
   } else {
     col <- ifelse(1:n %in% outliers, "red", "black")
-    tourr::animate_xy(data[,-(d+1)], col=col)
+    tourr::animate_xy(data[,-(d+1)], col=col, pch = 30)
   }
 }
