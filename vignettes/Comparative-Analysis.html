@@ -10,52 +10,14 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="Vignette Author" />
+<meta name="author" content="Priyanga Dilini talagala" />
 
 <meta name="date" content="2018-02-23" />
 
-<title>Vignette Title</title>
+<title>Comparative Analysis of Different Outlier Methods</title>
 
 
 
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-</style>
 
 
 
@@ -68,214 +30,30 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
-<h1 class="title toc-ignore">Vignette Title</h1>
-<h4 class="author"><em>Vignette Author</em></h4>
+<h1 class="title toc-ignore">Comparative Analysis of Different Outlier Methods</h1>
+<h4 class="author"><em>Priyanga Dilini talagala</em></h4>
 <h4 class="date"><em>2018-02-23</em></h4>
 
 
-
-<p>Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The <code>html_vignette</code> output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The <code>html_vignette</code> format:</p>
+<div id="TOC">
 <ul>
-<li>Never uses retina figures</li>
-<li>Has a smaller default figure size</li>
-<li>Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style</li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#a-comparative-analysis-with-hdoutliers-package-wilkinson-2018">A comparative analysis with <code>HDoutliers</code> package (Wilkinson, 2018)</a></li>
+<li><a href="#references">References</a></li>
 </ul>
-<div id="vignette-info" class="section level2">
-<h2>Vignette Info</h2>
-<p>Note the various macros within the <code>vignette</code> section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your vignette.</p>
 </div>
-<div id="styles" class="section level2">
-<h2>Styles</h2>
-<p>The <code>html_vignette</code> template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:</p>
-<pre><code>output: 
-  rmarkdown::html_vignette:
-    css: mystyles.css</code></pre>
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p><code>stray</code> is an R package to detect outlirs in High dimensional data. This algorithm is motivatd from  package. In <code>stray</code> we define an anomaly as an obervation or a cluster of observation that displays a significant deviation from the majority. An approach based on extreme value theory is used to define an anomalous threshold.</p>
 </div>
-<div id="figures" class="section level2">
-<h2>Figures</h2>
-<p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)
-<span class="kw">plot</span>(<span class="dv">10</span><span class="op">:</span><span class="dv">1</span>)</code></pre></div>
-<p><img src="data:image/png;base64,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" /><img src="data:image/png;base64,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" /></p>
-<p>You can enable figure captions by <code>fig_caption: yes</code> in YAML:</p>
-<pre><code>output:
-  rmarkdown::html_vignette:
-    fig_caption: yes</code></pre>
-<p>Then you can use the chunk option <code>fig.cap = &quot;Your figure caption.&quot;</code> in <strong>knitr</strong>.</p>
+<div id="a-comparative-analysis-with-hdoutliers-package-wilkinson-2018" class="section level2">
+<h2>A comparative analysis with <code>HDoutliers</code> package (Wilkinson, 2018)</h2>
+<p>Eventhough our main focus is on high dimensional data, for simplicity, we use two-dimensional problems to demonstrate the special features of our algorithm.</p>
 </div>
-<div id="more-examples" class="section level2">
-<h2>More Examples</h2>
-<p>You can write math expressions, e.g. <span class="math inline">\(Y = X\beta + \epsilon\)</span>, footnotes<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, and tables, e.g. using <code>knitr::kable()</code>.</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">mpg</th>
-<th align="right">cyl</th>
-<th align="right">disp</th>
-<th align="right">hp</th>
-<th align="right">drat</th>
-<th align="right">wt</th>
-<th align="right">qsec</th>
-<th align="right">vs</th>
-<th align="right">am</th>
-<th align="right">gear</th>
-<th align="right">carb</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Mazda RX4</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.620</td>
-<td align="right">16.46</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td>Mazda RX4 Wag</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.875</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td>Datsun 710</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">108.0</td>
-<td align="right">93</td>
-<td align="right">3.85</td>
-<td align="right">2.320</td>
-<td align="right">18.61</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td>Hornet 4 Drive</td>
-<td align="right">21.4</td>
-<td align="right">6</td>
-<td align="right">258.0</td>
-<td align="right">110</td>
-<td align="right">3.08</td>
-<td align="right">3.215</td>
-<td align="right">19.44</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td>Hornet Sportabout</td>
-<td align="right">18.7</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">175</td>
-<td align="right">3.15</td>
-<td align="right">3.440</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td>Valiant</td>
-<td align="right">18.1</td>
-<td align="right">6</td>
-<td align="right">225.0</td>
-<td align="right">105</td>
-<td align="right">2.76</td>
-<td align="right">3.460</td>
-<td align="right">20.22</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td>Duster 360</td>
-<td align="right">14.3</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">245</td>
-<td align="right">3.21</td>
-<td align="right">3.570</td>
-<td align="right">15.84</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td>Merc 240D</td>
-<td align="right">24.4</td>
-<td align="right">4</td>
-<td align="right">146.7</td>
-<td align="right">62</td>
-<td align="right">3.69</td>
-<td align="right">3.190</td>
-<td align="right">20.00</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td>Merc 230</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">140.8</td>
-<td align="right">95</td>
-<td align="right">3.92</td>
-<td align="right">3.150</td>
-<td align="right">22.90</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td>Merc 280</td>
-<td align="right">19.2</td>
-<td align="right">6</td>
-<td align="right">167.6</td>
-<td align="right">123</td>
-<td align="right">3.92</td>
-<td align="right">3.440</td>
-<td align="right">18.30</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-</tbody>
-</table>
-<p>Also a quote using <code>&gt;</code>:</p>
-<blockquote>
-<p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
-</blockquote>
-</div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>A footnote here.<a href="#fnref1">↩</a></p></li>
-</ol>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Wilkinson, L. (2018). Visualizing Big Data Outliers through Distributed Aggregation. IEEE transactions on visualization and computer graphics, 24(1), 256-266.</p>
 </div>
 
 
