@@ -16,6 +16,14 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(HDoutliers)
+library(stray)
+library(purrr)
+library(tidyverse)
+library(gridExtra)
+# install.packages("devtools")
+# devtools::install_github("pridiltal/stray")
+library(stray)
 ```
 
 ## Introduction
@@ -24,7 +32,6 @@ knitr::opts_chunk$set(
 ## A comparative analysis with `HDoutliers` package (Wilkinson, 2018)
 
 Eventhough our main focus is on high dimensional data, for simplicity, we use two-dimensional problems to demonstrate the special features of our algorithm.
-
 
 
 

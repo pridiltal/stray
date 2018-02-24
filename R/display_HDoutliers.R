@@ -9,7 +9,8 @@
 #' @importFrom colorspace rainbow_hcl
 #' @importFrom dplyr mutate
 #' @importFrom animation saveGIF
-#' @import ggplot2
+#' @importFrom dplyr as_tibble
+#' @importFrom ggplot2  ggplot geom_point scale_colour_manual xlab ylab theme
 #' @import tourr
 #' @export
 #' @examples
@@ -31,26 +32,20 @@ display_HDoutliers <- function(data, outliers) {
     data <-dplyr::mutate(data, index = rep(0, n))
     out_display <- ggplot(data) +
      geom_point(aes_string(x = data[,1], y= data[,3], colour = data[,2])) +
-     scale_colour_manual(name = "Type",
-                         values = c("outlier" = "red",
-                                    "non_outlier"= "black"))+
-      xlab("Value") +
-      ylab("")+
-      theme(axis.text.y=element_blank(),
-            axis.ticks.y=element_blank())
-    print(out_display)
-  } else if (d==2){
+     scale_colour_manual(name = "Type", values = c("outlier" = "red", "non_outlier"= "black"))+
+     xlab("Value") +
+     ylab("")+
+     theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
+    out_display
+  } else if (d==2) {
     out_display <- ggplot(data) +
       geom_point(aes_string(x = data[,1], y= data[,2], colour = "outcon")) +
-      scale_colour_manual(name = "Type",
-                          values = c("outlier" = "red",
-                                     "non_outlier"= "black"))+
+      scale_colour_manual(name = "Type", values = c("outlier" = "red", "non_outlier"= "black"))+
       xlab("Variable 1") +
       ylab("Variable 2")
-
-    print(out_display)
+    out_display
   } else {
     col <- ifelse(1:n %in% outliers, "red", "black")
-    tourr::animate_xy(data[,-(d+1)], col=col, pch = 30)
+    tourr::animate_xy(data[,-(d+1)], col=col, pch = 20)
   }
 }
