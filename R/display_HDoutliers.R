@@ -11,7 +11,7 @@
 #' @importFrom animation saveGIF
 #' @importFrom dplyr as_tibble
 #' @importFrom ggplot2  ggplot geom_point scale_colour_manual xlab ylab theme
-#' @import tourr
+#' @importFrom tourr animate_xy
 #' @export
 #' @examples
 #' \dontrun{
@@ -28,7 +28,7 @@ display_HDoutliers <- function(data, outliers) {
   outcon <- as.factor(ifelse(1:n %in% outliers,
                              "outlier", "non_outlier"))
   data <-dplyr::mutate(data, outcon)
-  if(d==1) {
+  if(d == 1) {
     data <-dplyr::mutate(data, index = rep(0, n))
     out_display <- ggplot(data) +
      geom_point(aes_string(x = data[,1], y= data[,3], colour = data[,2])) +
@@ -37,7 +37,7 @@ display_HDoutliers <- function(data, outliers) {
      ylab("")+
      theme(axis.text.y=element_blank(), axis.ticks.y=element_blank())
     out_display
-  } else if (d==2) {
+  } else if (d == 2) {
     out_display <- ggplot(data) +
       geom_point(aes_string(x = data[,1], y= data[,2], colour = "outcon")) +
       scale_colour_manual(name = "Type", values = c("outlier" = "red", "non_outlier"= "black"))+
