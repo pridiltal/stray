@@ -17,9 +17,7 @@
 #' @importFrom HDoutliers getHDmembers
 #' @importFrom FactoMineR MCA
 #' @importFrom gridExtra grid.arrange
-#' @importFrom dplyr bind_rows
 #' @importFrom FNN knn.dist
-#' @importFrom purrr flatten
 #' @import tibble
 #' @import ggplot2
 #' @import stats
@@ -39,7 +37,7 @@
 #' nout <- 10 # number of outliers
 #' typical_data <- tibble::as.tibble(matrix(rnorm(2*n), ncol = 2, byrow = TRUE))
 #' out <- tibble::as.tibble(matrix(5*runif(2*nout,min=-5,max=5), ncol = 2, byrow = TRUE))
-#' data <- dplyr::bind_rows(out, typical_data )
+#' data <- rbind(out, typical_data )
 #' outliers <- find_HDoutliers(data)
 #' display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01){
@@ -57,8 +55,8 @@ if(length(members)==1){
     split(x, ceiling(seq/max))
   }
 
-  members<- lapply(members, break_list)
-  members<- purrr::flatten(members)
+  members <- lapply(members, break_list)
+  members <- unlist(members, recursive= FALSE, use.names = FALSE)
   exemplars <- sapply(members, function(x) x[[1]])
   names(members) <- exemplars
 

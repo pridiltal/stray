@@ -7,9 +7,7 @@
 #' @param outliers A vector of indexes of the observations determined to be
 #' outliers by \code{\link[stray]{find_HDoutliers}}
 #' @importFrom colorspace rainbow_hcl
-#' @importFrom dplyr mutate
 #' @importFrom animation saveGIF
-#' @importFrom dplyr as_tibble
 #' @importFrom ggplot2  ggplot geom_point scale_colour_manual xlab ylab theme
 #' @importFrom tourr animate_xy
 #' @export
@@ -25,11 +23,10 @@ display_HDoutliers <- function(data, outliers) {
   data <- as.data.frame(data)
   d <- ncol(data)
   n <- nrow(data)
-  outcon <- as.factor(ifelse(1:n %in% outliers,
-                             "outlier", "non_outlier"))
-  data <-dplyr::mutate(data, outcon)
+  data$outcon <-as.factor(ifelse(1:n %in% outliers,
+                                 "outlier", "non_outlier"))
   if(d == 1) {
-    data <-dplyr::mutate(data, index = rep(0, n))
+    data$index <- rep(0, n)
     out_display <- ggplot(data) +
      geom_point(aes_string(x = data[,1], y= data[,3], colour = data[,2])) +
      scale_colour_manual(name = "Type", values = c("outlier" = "red", "non_outlier"= "black"))+

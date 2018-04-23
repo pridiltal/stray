@@ -7,12 +7,9 @@ Imports: HDoutliers,
     FNN,
     FactoMineR,
     stats,
-    tidyverse,
     ggplot2,
     tibble,
     gridExtra,
-    dplyr,
-    purrr,
     mclust,
     tourr,
     colorspace,
@@ -21,12 +18,8 @@ Authors@R:
     c(person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
     person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("aut", "ths")),
     person("Kate", "Smith-Miles", email="kate.smith-miles@monash.edu", role=c("aut", "ths")))
-Author: Priyanga Dilini Talagala [aut]
-    Rob J. Hyndman [aut, ths]
-    Kate Smith-Miles [aut, ths]
-Maintainer: Priyanga Dilini Talagala <dilini.talagala@monash.edu>
 Description:
-    This package is a modification of HDoutliers package. HDoutliers is a powerful algorithm for the 
+    This is a modification of HDoutliers package. HDoutliers is a powerful algorithm for the 
     detection of anomalous observations in a dataset, which has (among other advantages) the ability 
     to detect clusters of outliers in multi-dimensional data without requiring a model of the typical
     behavior of the system. However, it suffers from some limitations that affect its accuracy. In

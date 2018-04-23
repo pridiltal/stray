@@ -41,7 +41,7 @@ n <- 1000 # number of observations
 nout <- 10 # number of outliers
 typical_data <- tibble::as.tibble(matrix(rnorm(2*n), ncol = 2, byrow = TRUE))
 out <- tibble::as.tibble(matrix(5*runif(2*nout,min=-5,max=5), ncol = 2, byrow = TRUE))
-data <- dplyr::bind_rows(out, typical_data )
+data <- rbind(out, typical_data )
 outliers <- find_HDoutliers(data)
 display_HDoutliers(data, outliers)
 }
