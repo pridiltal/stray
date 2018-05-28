@@ -15,12 +15,8 @@
 #' @seealso \code{\link{get_leader_clusters}}
 #' @export
 #' @importFrom HDoutliers getHDmembers
-#' @importFrom FactoMineR MCA
-#' @importFrom gridExtra grid.arrange
 #' @importFrom FNN knn.dist
-#' @import tibble
 #' @import ggplot2
-#' @import stats
 #' @references {Wilkinson, L. (2018), `Visualizing big data
 #' outliers through distributed aggregation', IEEE
 #' transactions on visualization and computer graphics 24(1), 256-266.}
@@ -41,9 +37,10 @@
 #' outliers <- find_HDoutliers(data)
 #' display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01){
-standardize <- function(z) {(z-median(z))/IQR(z)}
+#standardize <- function(z) {(z-median(z))/IQR(z)}
+unitization <- function(z) {(z-min(z))/(max(z)-min(z))}
 data <- as.matrix(data)
-zdata <- apply(data, 2, standardize)
+zdata <- apply(data, 2, unitization)
 members <- get_leader_clusters(zdata, maxrows = maxrows)
 
 if(length(members)==1){
@@ -118,7 +115,8 @@ get_leader_clusters <- function( data, maxrows = 1000)
 
   n <- nrow(data)
   p <- ncol(data)
-  radius <- 1/2*((1/n)^(1/p))
+  #radius <- 1/2*((1/n)^(1/p))
+  radius<- 0.1/(log(n)^(1/p))
 
   if (n <= maxrows) {
     cl <- mclust::partuniq(data)
