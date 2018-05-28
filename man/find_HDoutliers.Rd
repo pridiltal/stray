@@ -4,7 +4,7 @@
 \alias{find_HDoutliers}
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
-find_HDoutliers(data, maxrows = 1000, alpha = 0.01)
+find_HDoutliers(data, maxrows = 1000, alpha = 0.05)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
