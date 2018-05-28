@@ -116,8 +116,9 @@ get_leader_clusters <- function( data, maxrows = 1000)
 
   n <- nrow(data)
   p <- ncol(data)
-  radius <- 1/2*((1/n)^(1/p))
- # radius<- 0.1/(log(n)^(1/p))
+ # radius <- 1/2*((1/n)^(1/p))
+  radius <- 0.5
+ # radius<- 0.1/(log(n)^(1/p)) #HD
 
   if (n <= maxrows) {
     cl <- mclust::partuniq(data)
