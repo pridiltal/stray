@@ -38,8 +38,8 @@
 #' display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01){
 
-  standardize <- function(z) {(z-stats::median(z))/stats::IQR(z)}
-#standardize <- function(z) {(z-mean(z))/stats::sd(z)}
+ # standardize <- function(z) {(z-stats::median(z))/stats::IQR(z)}
+standardize <- function(z) {(z-mean(z))/stats::sd(z)}
 #unitization <- function(z) {(z-min(z))/(max(z)-min(z))}
 data <- as.matrix(data)
 zdata <- apply(data, 2, standardize)
