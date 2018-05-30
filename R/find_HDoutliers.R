@@ -38,11 +38,11 @@
 #' display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01){
 
-#standardize <- function(z) {(z-stats::median(z))/stats::IQR(z)}
+  standardize <- function(z) {(z-stats::median(z))/stats::IQR(z)}
 #standardize <- function(z) {(z-mean(z))/stats::sd(z)}
-unitization <- function(z) {(z-min(z))/(max(z)-min(z))}
+#unitization <- function(z) {(z-min(z))/(max(z)-min(z))}
 data <- as.matrix(data)
-zdata <- apply(data, 2, unitization)
+zdata <- apply(data, 2, standardize)
 members <- get_leader_clusters(zdata, maxrows = maxrows)
 
 if(length(members)==1){
@@ -74,14 +74,14 @@ if(length(members)==1){
   ord <- order(d)
   gaps <- c(0, diff(d[ord]))
   n4 <- max(min(50, floor(n/4)), 2)
- # J <- 2:n4
+  J <- 2:n4
+ start <- max(floor(n/2), 1) + 1
+  ghat <- numeric(n)
+ for (i in start:n) ghat[i] <- sum((J/(n4-1)) * gaps[i - J+1 ]) # check i - j +1
+ # J <- 1:n4
 #  start <- max(floor(n/2), 1) + 1
 #  ghat <- numeric(n)
-#  for (i in start:n) ghat[i] <- sum((J/(n4-1)) * gaps[i - J+1 ]) # check i - j +1
-  J <- 1:n4
-  start <- max(floor(n/2), 1) + 1
-  ghat <- numeric(n)
-  for (i in start:n) ghat[i] <- sum((J/(n4)) * gaps[i - J+1 ]) # check i - j +1
+#  for (i in start:n) ghat[i] <- sum((J/(n4)) * gaps[i - J+1 ]) # check i - j +1
   logAlpha <- log(1/alpha)
   bound <- Inf
 
@@ -121,9 +121,9 @@ get_leader_clusters <- function( data, maxrows = 1000)
 
   n <- nrow(data)
   p <- ncol(data)
-# radius <- 1/2*((1/n)^(1/p))
+radius <- 1/2*((1/n)^(1/p))
  # radius <- 0.5
-  radius<- 0.1/(log(n)^(1/p)) #HD
+ # radius<- 0.1/(log(n)^(1/p)) #HD
 
   if (n <= maxrows) {
     cl <- mclust::partuniq(data)
