@@ -14,9 +14,6 @@
 #' reduce the number of k-nearest neighbor computations required for outlier detection.
 #' @seealso \code{\link{get_leader_clusters}}
 #' @export
-#' @importFrom HDoutliers getHDmembers
-#' @importFrom FNN knn.dist
-#' @import ggplot2
 #' @references {Wilkinson, L. (2018), `Visualizing big data
 #' outliers through distributed aggregation', IEEE
 #' transactions on visualization and computer graphics 24(1), 256-266.}
@@ -42,58 +39,13 @@ find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01){
 #standardize <- function(z) {(z-mean(z))/stats::sd(z)}
 #unitization <- function(z) {(z-min(z))/(max(z)-min(z))}
 data <- as.matrix(data)
-zdata <- apply(data, 2, standardize)
-members <- get_leader_clusters(zdata, maxrows = maxrows)
+data <- apply(data, 2, standardize)
+members <- get_leader_clusters(data, maxrows = maxrows)
 
 if(length(members)==1){
   out = NULL
 } else {
-  break_list<-function(x){
-    max <- floor(nrow(data) / 20)
-    seq <- seq_along(x)
-    split(x, ceiling(seq/max))
-  }
-
-  members <- lapply(members, break_list)
-  members <- unlist(members, recursive= FALSE, use.names = FALSE)
-  exemplars <- sapply(members, function(x) x[[1]])
-  names(members) <- exemplars
-
-
-  k <- ceiling(length(exemplars)/ 20)
-  if(k==1){
-    d <- as.vector(FNN::knn.dist(zdata[exemplars, ], 1 ))
-  } else{
-    d_knn <- FNN::knn.dist(zdata[exemplars, ], k )
-    d_knn1 <-cbind(rep(0, nrow(d_knn)), d_knn)
-    diff <- t(apply(d_knn1, 1, diff))
-    max_diff <- apply(diff, 1, which.max)
-    d <- d_knn[cbind(1:nrow(d_knn), max_diff)]
-  }
-  n <- length(d)
-  ord <- order(d)
-  gaps <- c(0, diff(d[ord]))
-  n4 <- max(min(50, floor(n/4)), 2)
-  J <- 2:n4
- start <- max(floor(n/2), 1) + 1
-  ghat <- numeric(n)
- for (i in start:n) ghat[i] <- sum((J/(n4-1)) * gaps[i - J+1 ]) # check i - j +1
- # J <- 1:n4
-#  start <- max(floor(n/2), 1) + 1
-#  ghat <- numeric(n)
-#  for (i in start:n) ghat[i] <- sum((J/(n4)) * gaps[i - J+1 ]) # check i - j +1
-  logAlpha <- log(1/alpha)
-  bound <- Inf
-
-  for (i in start:n) {
-    if (gaps[i] > logAlpha * ghat[i]) {
-      bound <- d[ord][i - 1]
-      break
-    }
-  }
-  ex <- exemplars[which(d > bound)]
-  out <- unlist(members[match(ex, exemplars)])
-  names(out) <- NULL
+  out<- advanced_HDoutliers(data, members, maxrows, alpha)
 }
 return(out)
 }
@@ -163,3 +115,67 @@ radius <- 1/2*((1/n)^(1/p))
   members
 }
 
+#' Advanced HDoutliers
+#'
+#' @param data A vector, matrix, or data frame consisting of numeric and/or categorical variables.
+#' @param maxrows If the number of observations is greater than \code{maxrows}, \code{outliers} reduces the
+#'  number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 10000.
+#' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
+#'  outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
+#'  distances between exemplars.
+#' @param members output of \code{\link{get_leader_clusters}}
+#' @return The indexes of the observations determined to be outliers.
+#' @export
+#' @importFrom HDoutliers getHDmembers
+#' @importFrom FNN knn.dist
+advanced_HDoutliers<- function(data, members,  maxrows = 1000, alpha = 0.01)
+{
+  break_list<-function(x){
+    max <- floor(nrow(data) / 20)
+    seq <- seq_along(x)
+    split(x, ceiling(seq/max))
+  }
+
+  members <- lapply(members, break_list)
+  members <- unlist(members, recursive= FALSE, use.names = FALSE)
+  exemplars <- sapply(members, function(x) x[[1]])
+  names(members) <- exemplars
+
+
+  k <- ceiling(length(exemplars)/ 20)
+  if(k==1){
+    d <- as.vector(FNN::knn.dist(data[exemplars, ], 1 ))
+  } else{
+    d_knn <- FNN::knn.dist(data[exemplars, ], k )
+    d_knn1 <-cbind(rep(0, nrow(d_knn)), d_knn)
+    diff <- t(apply(d_knn1, 1, diff))
+    max_diff <- apply(diff, 1, which.max)
+    d <- d_knn[cbind(1:nrow(d_knn), max_diff)]
+  }
+  n <- length(d)
+  ord <- order(d)
+  gaps <- c(0, diff(d[ord]))
+  n4 <- max(min(50, floor(n/4)), 2)
+  J <- 2:n4
+  start <- max(floor(n/2), 1) + 1
+  ghat <- numeric(n)
+  for (i in start:n) ghat[i] <- sum((J/(n4-1)) * gaps[i - J+1 ]) # check i - j +1
+  # J <- 1:n4
+  #  start <- max(floor(n/2), 1) + 1
+  #  ghat <- numeric(n)
+  #  for (i in start:n) ghat[i] <- sum((J/(n4)) * gaps[i - J+1 ]) # check i - j +1
+  logAlpha <- log(1/alpha)
+  bound <- Inf
+
+  for (i in start:n) {
+    if (gaps[i] > logAlpha * ghat[i]) {
+      bound <- d[ord][i - 1]
+      break
+    }
+  }
+  ex <- exemplars[which(d > bound)]
+  out <- unlist(members[match(ex, exemplars)])
+  names(out) <- NULL
+  return(out)
+
+}

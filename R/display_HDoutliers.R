@@ -8,7 +8,7 @@
 #' outliers by \code{\link[stray]{find_HDoutliers}}
 #' @importFrom colorspace rainbow_hcl
 #' @importFrom animation saveGIF
-#' @importFrom ggplot2  ggplot geom_point scale_colour_manual xlab ylab theme
+#' @import ggplot2
 #' @importFrom tourr animate_xy
 #' @export
 #' @examples
