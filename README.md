@@ -1,3 +1,7 @@
+---
+output:github_document
+---
+
 # stray {STReam AnomalY} <img src="man/figures/logo.png" align="right" height="150" />
 
 <!-- rmarkdown v1 -->
