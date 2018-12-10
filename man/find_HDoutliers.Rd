@@ -13,7 +13,7 @@ find_HDoutliers(data, maxrows = 1000, alpha = 0.01)
 number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 10000.}
 
 \item{alpha}{Threshold for determining the cutoff for outliers. Observations are considered
-outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
+outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 distances between exemplars.}
 }
 \value{

@@ -3,6 +3,7 @@
 export(advanced_HDoutliers)
 export(display_HDoutliers)
 export(find_HDoutliers)
+export(find_theshold)
 export(get_leader_clusters)
 import(ggplot2)
 importFrom(FNN,get.knnx)

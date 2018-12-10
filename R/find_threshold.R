@@ -1,3 +1,11 @@
+#' Find Outlier Threshold
+#'
+#' @param outlier_score A vector of outlier scores. Can bve a named vector or a vector with no names.
+#' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
+#'  outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
+#'  distances between exemplars.
+#' @return The indexes (or names, if the input is named vactor) of the observations determined to be outliers.
+#' @export
 find_theshold <- function(outlier_score, alpha = 0.05) {
   if (is.null(names(outlier_score))) {
     names(outlier_score) <- 1:length(outlier_score)
