@@ -7,9 +7,6 @@
 #' @return The indexes (or names, if the input is named vactor) of the observations determined to be outliers.
 #' @export
 find_theshold <- function(outlier_score, alpha = 0.05) {
-  if (is.null(names(outlier_score))) {
-    names(outlier_score) <- 1:length(outlier_score)
-  }
 
   n <- length(outlier_score)
   ord <- order(outlier_score)
@@ -34,5 +31,5 @@ find_theshold <- function(outlier_score, alpha = 0.05) {
   }
   ex <- which(outlier_score > bound)
 
-  return(as.numeric(names(ex)))
+  return(ex)
 }

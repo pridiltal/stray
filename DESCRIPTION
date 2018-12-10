@@ -9,7 +9,9 @@ Imports: HDoutliers,
     mclust,
     tourr,
     colorspace,
-    animation
+    animation,
+    pcaPP,
+    stats
 Authors@R:
     c(person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
     person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("aut", "ths")),

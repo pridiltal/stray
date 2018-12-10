@@ -4,7 +4,8 @@
 \alias{find_HDoutliers}
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
-find_HDoutliers(data, maxrows = 1000, alpha = 0.01)
+find_HDoutliers(data, maxrows = 1000, alpha = 0.01,
+  method = c("HDadv", "hdr", "ahull"))
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -15,6 +16,8 @@ number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The
 \item{alpha}{Threshold for determining the cutoff for outliers. Observations are considered
 outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 distances between exemplars.}
+
+\item{method}{Outlier detection method used for detecting outlier in the high dimensional space.}
 }
 \value{
 The indexes of the observations determined to be outliers.

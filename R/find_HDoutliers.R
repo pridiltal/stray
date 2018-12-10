@@ -8,12 +8,14 @@
 #' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
 #'  outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
+#' @param method Outlier detection method used for detecting outlier in the high dimensional space.
 #' @return The indexes of the observations determined to be outliers.
 #' @details If the number of observations exceeds \code{maxrows}, the data is first partitioned into lists
 #' associated with \emph{exemplars} and their \emph{members} within \code{radius} of each \emph{exemplar}, to
 #' reduce the number of k-nearest neighbor computations required for outlier detection.
 #' @seealso \code{\link{get_leader_clusters}}
 #' @export
+#' @import stats
 #' @references {Wilkinson, L. (2018), `Visualizing big data
 #' outliers through distributed aggregation', IEEE
 #' transactions on visualization and computer graphics 24(1), 256-266.}
@@ -33,21 +35,40 @@
 #' data <- rbind(out, typical_data )
 #' outliers <- find_HDoutliers(data)
 #' display_HDoutliers(data, outliers)
-find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01) {
-  standardize <- function(z) {
-    (z - stats::median(z)) / stats::IQR(z)
-  }
-  # standardize <- function(z) {(z-mean(z))/stats::sd(z)}
-  # unitization <- function(z) {(z-min(z))/(max(z)-min(z))}
-  data <- as.matrix(data)
-  data <- apply(data, 2, standardize)
-  members <- get_leader_clusters(data, maxrows = maxrows)
+find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01, method = c("HDadv", "hdr", "ahull")) {
 
-  if (length(members) == 1) {
-    out <- NULL
-  } else {
-    out <- advanced_HDoutliers(data, members, maxrows, alpha)
+
+  data <- as.matrix(data)
+  r <- nrow(data)
+  data[is.infinite(data)] <- NA
+  naomit_data <- na.omit(data)
+  na_act <- na.action(naomit_data)
+  if (is.null(na_act)) {
+    tag <- 1:r
   }
+  else {
+    tag <- (1:r)[-na_act]
+  }
+
+  if (method == "HDadv") {
+    standardize <- function(z) {
+      (z - stats::median(z)) / stats::IQR(z)
+    }
+    data <- apply(naomit_data, 2, standardize)
+    members <- get_leader_clusters(data, maxrows = maxrows)
+    if (length(members) == 1) {
+      out <- NULL
+    } else {
+      out <- advanced_HDoutliers(data, members, maxrows, alpha)
+    }
+    out <- tag[out]
+  }
+
+  if (method == "hdr") {
+    out <- hdr_outliers(data)
+  }
+
+
   return(out)
 }
 
@@ -160,4 +181,18 @@ advanced_HDoutliers <- function(data, members, maxrows = 1000, alpha = 0.01) {
   out <- unlist(members[match(ex, exemplars)])
   names(out) <- NULL
   return(out)
+}
+
+#' Find anomalies using high density regions of the irst two principal components of the high dimensional data set
+#'
+#' @param data A vector, matrix, or data frame consisting of numeric and/or categorical variables.
+#' @return The indexes of the observations determined to be outliers.
+#' @export
+#' @importFrom pcaPP PCAproj
+hdr_outliers <- function(data) {
+  print("hi")
+
+  rbt.pca <- pcaPP::PCAproj(data, k = 2, center = mean,
+                            scale = sd)
+  scores <- rbt.pca$scores[, 1:2]
 }
