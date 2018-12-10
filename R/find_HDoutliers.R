@@ -33,21 +33,22 @@
 #' data <- rbind(out, typical_data )
 #' outliers <- find_HDoutliers(data)
 #' display_HDoutliers(data, outliers)
-find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01){
+find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01) {
+  standardize <- function(z) {
+    (z - stats::median(z)) / stats::IQR(z)
+  }
+  # standardize <- function(z) {(z-mean(z))/stats::sd(z)}
+  # unitization <- function(z) {(z-min(z))/(max(z)-min(z))}
+  data <- as.matrix(data)
+  data <- apply(data, 2, standardize)
+  members <- get_leader_clusters(data, maxrows = maxrows)
 
- standardize <- function(z) {(z-stats::median(z))/stats::IQR(z)}
-#standardize <- function(z) {(z-mean(z))/stats::sd(z)}
-#unitization <- function(z) {(z-min(z))/(max(z)-min(z))}
-data <- as.matrix(data)
-data <- apply(data, 2, standardize)
-members <- get_leader_clusters(data, maxrows = maxrows)
-
-if(length(members)==1){
-  out = NULL
-} else {
-  out<- advanced_HDoutliers(data, members, maxrows, alpha)
-}
-return(out)
+  if (length(members) == 1) {
+    out <- NULL
+  } else {
+    out <- advanced_HDoutliers(data, members, maxrows, alpha)
+  }
+  return(out)
 }
 
 
@@ -68,14 +69,12 @@ return(out)
 #' @references {Hartigan, John A. "Clustering algorithms." (1975).}
 #' @references {Kantardzic, Mehmed. Data mining: concepts, models, methods, and algorithms.
 #'  John Wiley & Sons, 2011.}
-get_leader_clusters <- function( data, maxrows = 1000)
-{
-
+get_leader_clusters <- function(data, maxrows = 1000) {
   n <- nrow(data)
   p <- ncol(data)
-radius <- 1/2*((1/n)^(1/p))
- # radius <- 0.5
- # radius<- 0.1/(log(n)^(1/p)) #HD
+  radius <- 1 / 2 * ((1 / n)^(1 / p))
+  # radius <- 0.5
+  # radius<- 0.1/(log(n)^(1/p)) #HD
 
   if (n <= maxrows) {
     cl <- mclust::partuniq(data)
@@ -89,15 +88,19 @@ radius <- 1/2*((1/n)^(1/p))
         members[[j]] <- which(cl == u)
       }
     }
-    else members <- as.list(1:n)
+    else {
+      members <- as.list(1:n)
+    }
   }
   else {
     members <- rep(list(NULL), n)
     exemplars <- 1
     members[[1]] <- 1
     for (i in 2:n) {
-      KNN <- FNN::get.knnx(data = data[exemplars, , drop = F],
-                      query = data[i, , drop = F], k = 1)
+      KNN <- FNN::get.knnx(
+        data = data[exemplars, , drop = F],
+        query = data[i, , drop = F], k = 1
+      )
       m <- KNN$nn.index[1, 1]
       d <- KNN$nn.dist[1, 1]
       if (d < radius) {
@@ -128,26 +131,25 @@ radius <- 1/2*((1/n)^(1/p))
 #' @export
 #' @importFrom HDoutliers getHDmembers
 #' @importFrom FNN knn.dist
-advanced_HDoutliers<- function(data, members,  maxrows = 1000, alpha = 0.01)
-{
-  break_list<-function(x){
+advanced_HDoutliers <- function(data, members, maxrows = 1000, alpha = 0.01) {
+  break_list <- function(x) {
     max <- floor(nrow(data) / 20)
     seq <- seq_along(x)
-    split(x, ceiling(seq/max))
+    split(x, ceiling(seq / max))
   }
 
   members <- lapply(members, break_list)
-  members <- unlist(members, recursive= FALSE, use.names = FALSE)
+  members <- unlist(members, recursive = FALSE, use.names = FALSE)
   exemplars <- sapply(members, function(x) x[[1]])
   names(members) <- exemplars
 
 
-  k <- ceiling(length(exemplars)/ 20)
-  if(k==1){
-    d <- as.vector(FNN::knn.dist(data[exemplars, ], 1 ))
-  } else{
-    d_knn <- FNN::knn.dist(data[exemplars, ], k )
-    d_knn1 <-cbind(rep(0, nrow(d_knn)), d_knn)
+  k <- ceiling(length(exemplars) / 20)
+  if (k == 1) {
+    d <- as.vector(FNN::knn.dist(data[exemplars, ], 1))
+  } else {
+    d_knn <- FNN::knn.dist(data[exemplars, ], k)
+    d_knn1 <- cbind(rep(0, nrow(d_knn)), d_knn)
     diff <- t(apply(d_knn1, 1, diff))
     max_diff <- apply(diff, 1, which.max)
     d <- d_knn[cbind(1:nrow(d_knn), max_diff)]
@@ -155,16 +157,16 @@ advanced_HDoutliers<- function(data, members,  maxrows = 1000, alpha = 0.01)
   n <- length(d)
   ord <- order(d)
   gaps <- c(0, diff(d[ord]))
-  n4 <- max(min(50, floor(n/4)), 2)
+  n4 <- max(min(50, floor(n / 4)), 2)
   J <- 2:n4
-  start <- max(floor(n/2), 1) + 1
+  start <- max(floor(n / 2), 1) + 1
   ghat <- numeric(n)
-  for (i in start:n) ghat[i] <- sum((J/(n4-1)) * gaps[i - J+1 ]) # check i - j +1
+  for (i in start:n) ghat[i] <- sum((J / (n4 - 1)) * gaps[i - J + 1 ]) # check i - j +1
   # J <- 1:n4
   #  start <- max(floor(n/2), 1) + 1
   #  ghat <- numeric(n)
   #  for (i in start:n) ghat[i] <- sum((J/(n4)) * gaps[i - J+1 ]) # check i - j +1
-  logAlpha <- log(1/alpha)
+  logAlpha <- log(1 / alpha)
   bound <- Inf
 
   for (i in start:n) {
@@ -177,5 +179,4 @@ advanced_HDoutliers<- function(data, members,  maxrows = 1000, alpha = 0.01)
   out <- unlist(members[match(ex, exemplars)])
   names(out) <- NULL
   return(out)
-
 }
