@@ -4,7 +4,7 @@
 \alias{find_theshold}
 \title{Find Outlier Threshold}
 \usage{
-find_theshold(outlier_score, alpha = 0.05)
+find_theshold(outlier_score, alpha = 0.05, outtail = c("max", "min"))
 }
 \arguments{
 \item{outlier_score}{A vector of outlier scores. Can bve a named vector or a vector with no names.}
@@ -12,6 +12,8 @@ find_theshold(outlier_score, alpha = 0.05)
 \item{alpha}{Threshold for determining the cutoff for outliers. Observations are considered
 outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 distances between exemplars.}
+
+\item{outtail}{Direction of the outlier tail.}
 }
 \value{
 The indexes (or names, if the input is named vactor) of the observations determined to be outliers.

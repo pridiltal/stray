@@ -4,11 +4,17 @@
 #' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
 #'  outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
+#' @param outtail Direction of the outlier tail.
 #' @return The indexes (or names, if the input is named vactor) of the observations determined to be outliers.
 #' @export
-find_theshold <- function(outlier_score, alpha = 0.05) {
+find_theshold <- function(outlier_score, alpha = 0.05, outtail = c("max", "min")) {
 
   n <- length(outlier_score)
+  if(outtail == "min")
+  {
+    outlier_score <- - outlier_score
+  }
+
   ord <- order(outlier_score)
   gaps <- c(0, diff(outlier_score[ord]))
   n4 <- max(min(50, floor(n / 4)), 2)

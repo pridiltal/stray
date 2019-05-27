@@ -61,14 +61,13 @@ find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01, method = c("HDad
     } else {
       out <- advanced_HDoutliers(data, members, maxrows, alpha)
     }
-    out <- tag[out]
   }
 
   if (method == "hdr") {
     out <- hdr_outliers(data)
   }
 
-
+  out <- tag[out]
   return(out)
 }
 
@@ -189,10 +188,30 @@ advanced_HDoutliers <- function(data, members, maxrows = 1000, alpha = 0.01) {
 #' @return The indexes of the observations determined to be outliers.
 #' @export
 #' @importFrom pcaPP PCAproj
+#' @importFrom ks kde
+#' @importFrom hdrcde hdr.2d
 hdr_outliers <- function(data) {
-  print("hi")
 
-  rbt.pca <- pcaPP::PCAproj(data, k = 2, center = mean,
-                            scale = sd)
-  scores <- rbt.pca$scores[, 1:2]
+  nvar <- ncol(data)
+  if(nvar == 1)
+  {
+    d <- ks::kde(data, eval.points = data)
+    outlier_score <- d$estimate
+  }
+
+  if(nvar  > 1)
+  {
+    rbt.pca <- pcaPP::PCAproj(data, k = 2, center = mean,
+                              scale = sd)
+    scores <- rbt.pca$scores[, 1:2]
+    hdrinfo <- hdrcde::hdr.2d(x = scores[, 1], y = scores[,
+                                                          2], kde.package = "ks")
+    outlier_score<- hdrinfo$fxy
+
+
+  }
+
+
+  out <- find_theshold(outlier_score, alpha = 0.05, outtail =  "min")
+  return(out)
 }

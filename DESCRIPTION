@@ -1,7 +1,7 @@
 Package: stray
 Type: Package
-Title: Robust Anomaly Detection in Data Streams with Concept Drift
-Version: 1.0.0.9000
+Title: Anomaly Detection in High Dimensional and Temporal Data
+Version: 0.1.0.9000
 Depends: R (>= 3.4.0)
 Imports: HDoutliers,
     FNN,
@@ -11,7 +11,9 @@ Imports: HDoutliers,
     colorspace,
     animation,
     pcaPP,
-    stats
+    stats,
+    ks,
+    hdrcde
 Authors@R:
     c(person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
     person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("aut", "ths")),
@@ -28,7 +30,7 @@ Description:
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Suggests: knitr,
     rmarkdown,
     tibble
