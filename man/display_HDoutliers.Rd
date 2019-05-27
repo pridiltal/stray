@@ -4,19 +4,24 @@
 \alias{display_HDoutliers}
 \title{Display outliers with a scatterplot}
 \usage{
-display_HDoutliers(data, outliers)
+display_HDoutliers(data, out, alpha = 1)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric
 and/or categorical variables.}
 
-\item{outliers}{A vector of indexes of the observations determined to be
-outliers by \code{\link[stray]{find_HDoutliers}}}
+\item{out}{A list containing output values produced by \code{\link[stray]{find_HDoutliers}}}
+
+\item{alpha}{Alpha level of the points}
 }
 \description{
 Animate a 2D tour path with a scatterplot to visualize outliers.
 }
 \examples{
+data <-c( rnorm(100), 7,7.5, rnorm(100,20), 45)
+out <- find_HDoutliers(data)
+display_HDoutliers(data, out = out, alpha = out$out_scores )
+
 \dontrun{
 require(tourr)
 outpoints <- matrix(rnorm(12, mean=200), nrow = 2)

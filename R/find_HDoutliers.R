@@ -35,7 +35,8 @@
 #' data <- rbind(out, typical_data )
 #' outliers <- find_HDoutliers(data)
 #' display_HDoutliers(data, outliers)
-find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01, method = c("HDadv", "hdr", "ahull")) {
+find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01,
+                            method = c("HDadv", "hdr", "ahull")) {
 
 
   data <- as.matrix(data)
@@ -67,8 +68,11 @@ find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01, method = c("HDad
     out <- hdr_outliers(data)
   }
 
-  out <- tag[out]
-  return(out)
+  outliers <- tag[out$outliers]
+
+  type <-as.factor(ifelse(1:r %in% outliers,
+                                 "outlier", "typical"))
+  return(list(outliers = outliers, out_scores = out$out_scores, type= type))
 }
 
 
@@ -96,7 +100,9 @@ get_leader_clusters <- function(data, maxrows = 1000) {
   # radius <- 0.5
   # radius<- 0.1/(log(n)^(1/p)) #HD
 
+  # to capture identical elements
   if (n <= maxrows) {
+    #Gives a one-to-one mapping from unique observations to rows of a data matrix
     cl <- mclust::partuniq(data)
     U <- unique(cl)
     m <- length(U)
@@ -179,7 +185,7 @@ advanced_HDoutliers <- function(data, members, maxrows = 1000, alpha = 0.01) {
   ex <- exemplars[out_index]
   out <- unlist(members[match(ex, exemplars)])
   names(out) <- NULL
-  return(out)
+  return(list(outliers = out, out_scores = d))
 }
 
 #' Find anomalies using high density regions of the irst two principal components of the high dimensional data set
