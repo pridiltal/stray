@@ -4,14 +4,11 @@
 \alias{find_HDoutliers}
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
-find_HDoutliers(data, maxrows = 1000, alpha = 0.01,
-  method = c("HDadv", "hdr", "ahull"))
+find_HDoutliers(data, alpha = 0.01, method = c("HDadv", "hdr",
+  "ahull"))
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
-
-\item{maxrows}{If the number of observations is greater than \code{maxrows}, \code{outliers} reduces the
-number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 10000.}
 
 \item{alpha}{Threshold for determining the cutoff for outliers. Observations are considered
 outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
@@ -25,11 +22,6 @@ The indexes of the observations determined to be outliers.
 \description{
 Detect anomalies in high dimensional data. This is a modification of
 \code{\link[HDoutliers]{HDoutliers}}.
-}
-\details{
-If the number of observations exceeds \code{maxrows}, the data is first partitioned into lists
-associated with \emph{exemplars} and their \emph{members} within \code{radius} of each \emph{exemplar}, to
-reduce the number of k-nearest neighbor computations required for outlier detection.
 }
 \examples{
 require(ggplot2)
@@ -54,5 +46,5 @@ outliers through distributed aggregation', IEEE
 transactions on visualization and computer graphics 24(1), 256-266.}
 }
 \seealso{
-\code{\link{get_leader_clusters}}
+\code{\link{check_duplicates}}
 }

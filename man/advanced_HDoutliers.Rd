@@ -4,15 +4,12 @@
 \alias{advanced_HDoutliers}
 \title{Advanced HDoutliers}
 \usage{
-advanced_HDoutliers(data, members, maxrows = 1000, alpha = 0.01)
+advanced_HDoutliers(data, members, alpha = 0.01)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
 
-\item{members}{output of \code{\link{get_leader_clusters}}}
-
-\item{maxrows}{If the number of observations is greater than \code{maxrows}, \code{outliers} reduces the
-number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 10000.}
+\item{members}{output of \code{\link{check_duplicates}}}
 
 \item{alpha}{Threshold for determining the cutoff for outliers. Observations are considered
 outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor

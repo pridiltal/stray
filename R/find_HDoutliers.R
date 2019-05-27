@@ -3,17 +3,12 @@
 #' @description  Detect anomalies in high dimensional data. This is a modification of
 #' \code{\link[HDoutliers]{HDoutliers}}.
 #' @param data A vector, matrix, or data frame consisting of numeric and/or categorical variables.
-#' @param maxrows If the number of observations is greater than \code{maxrows}, \code{outliers} reduces the
-#'  number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 10000.
 #' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
 #'  outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
 #' @param method Outlier detection method used for detecting outlier in the high dimensional space.
 #' @return The indexes of the observations determined to be outliers.
-#' @details If the number of observations exceeds \code{maxrows}, the data is first partitioned into lists
-#' associated with \emph{exemplars} and their \emph{members} within \code{radius} of each \emph{exemplar}, to
-#' reduce the number of k-nearest neighbor computations required for outlier detection.
-#' @seealso \code{\link{get_leader_clusters}}
+#' @seealso \code{\link{check_duplicates}}
 #' @export
 #' @import stats
 #' @references {Wilkinson, L. (2018), `Visualizing big data
@@ -35,7 +30,7 @@
 #' data <- rbind(out, typical_data )
 #' outliers <- find_HDoutliers(data)
 #' display_HDoutliers(data, outliers)
-find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01,
+find_HDoutliers <- function(data, alpha = 0.01,
                             method = c("HDadv", "hdr", "ahull")) {
 
 
@@ -56,11 +51,11 @@ find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01,
       (z - stats::median(z)) / stats::IQR(z)
     }
     data <- apply(naomit_data, 2, standardize)
-    members <- get_leader_clusters(data, maxrows = maxrows)
+    members <- check_duplicates(data)
     if (length(members) == 1) {
       out <- NULL
     } else {
-      out <- advanced_HDoutliers(data, members, maxrows, alpha)
+      out <- advanced_HDoutliers(data, members, alpha)
     }
   }
 
@@ -76,33 +71,18 @@ find_HDoutliers <- function(data, maxrows = 1000, alpha = 0.01,
 }
 
 
-#' Form clusters of datapoints using Hartigan's Leader Algorithm.
+#' Check duplicates
 #'
-#' @description  Form clusters of datapoints using Hartigan's Leader Algorithm. This is a modification of
-#' \code{\link[HDoutliers]{getHDmembers}}.
+#' @description  Check duplicates by giving a one-to-one mapping from unique observations to rows of a data matrix
 #' @param data A vector, matrix, or data frame consisting of numeric and/or categorical variables.
-#' @param maxrows If the number of observations is greater than \code{maxrows}, \code{outliers} reduces the
-#'  number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 1000.
 #' @return  A list in which each component is a vector of
 #' observation indexes. The first index in each list is the
 #' index of the exemplar defining that list, and any remaining indexes are the associated members, within radius of the exemplar.
 #' @export
 #' @importFrom mclust partuniq
 #' @importFrom FNN get.knnx
-#' @seealso \code{\link[HDoutliers]{getHDmembers}}
-#' @references {Hartigan, John A. "Clustering algorithms." (1975).}
-#' @references {Kantardzic, Mehmed. Data mining: concepts, models, methods, and algorithms.
-#'  John Wiley & Sons, 2011.}
-get_leader_clusters <- function(data, maxrows = 1000) {
-  n <- nrow(data)
-  p <- ncol(data)
-  radius <- 1 / 2 * ((1 / n)^(1 / p))
-  # radius <- 0.5
-  # radius<- 0.1/(log(n)^(1/p)) #HD
-
-  # to capture identical elements
-  if (n <= maxrows) {
-    #Gives a one-to-one mapping from unique observations to rows of a data matrix
+check_duplicates <- function(data) {
+    n <- nrow(data)
     cl <- mclust::partuniq(data)
     U <- unique(cl)
     m <- length(U)
@@ -117,27 +97,7 @@ get_leader_clusters <- function(data, maxrows = 1000) {
     else {
       members <- as.list(1:n)
     }
-  }
-  else {
-    members <- rep(list(NULL), n)
-    exemplars <- 1
-    members[[1]] <- 1
-    for (i in 2:n) {
-      KNN <- FNN::get.knnx(
-        data = data[exemplars, , drop = F],
-        query = data[i, , drop = F], k = 1
-      )
-      m <- KNN$nn.index[1, 1]
-      d <- KNN$nn.dist[1, 1]
-      if (d < radius) {
-        l <- exemplars[m]
-        members[[l]] <- c(members[[l]], i)
-        next
-      }
-      exemplars <- c(exemplars, i)
-      members[[i]] <- i
-    }
-  }
+
   members <- members[!sapply(members, is.null)]
   exemplars <- sapply(members, function(x) x[[1]])
   names(members) <- exemplars
@@ -147,17 +107,15 @@ get_leader_clusters <- function(data, maxrows = 1000) {
 #' Advanced HDoutliers
 #'
 #' @param data A vector, matrix, or data frame consisting of numeric and/or categorical variables.
-#' @param maxrows If the number of observations is greater than \code{maxrows}, \code{outliers} reduces the
-#'  number used in k-nearest-neighbor computations to a set of \emph{exemplars}. The default value is 10000.
 #' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
 #'  outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
-#' @param members output of \code{\link{get_leader_clusters}}
+#' @param members output of \code{\link{check_duplicates}}
 #' @return The indexes of the observations determined to be outliers.
 #' @export
 #' @importFrom HDoutliers getHDmembers
 #' @importFrom FNN knn.dist
-advanced_HDoutliers <- function(data, members, maxrows = 1000, alpha = 0.01) {
+advanced_HDoutliers <- function(data, members, alpha = 0.01) {
   break_list <- function(x) {
     max <- floor(nrow(data) / 20)
     seq <- seq_along(x)
