@@ -139,7 +139,7 @@ advanced_HDoutliers <- function(data, members, alpha = 0.01) {
     d <- d_knn[cbind(1:nrow(d_knn), max_diff)]
   }
 
-  out_index <- find_theshold(d, alpha = 0.05)
+  out_index <- find_theshold(d, alpha = 0.05,  outtail = "max")
   ex <- exemplars[out_index]
   out <- unlist(members[match(ex, exemplars)])
   names(out) <- NULL
