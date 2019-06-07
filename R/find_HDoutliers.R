@@ -51,12 +51,7 @@ find_HDoutliers <- function(data, alpha = 0.01,
       (z - stats::median(z)) / stats::IQR(z)
     }
     data <- apply(naomit_data, 2, standardize)
-    members <- check_duplicates(data)
-    if (length(members) == 1) {
-      out <- NULL
-    } else {
-      out <- advanced_HDoutliers(data, members, alpha)
-    }
+    out <- advanced_HDoutliers(data,  alpha)
   }
 
   if (method == "hdr") {
@@ -110,29 +105,18 @@ check_duplicates <- function(data) {
 #' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
 #'  outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
-#' @param members output of \code{\link{check_duplicates}}
+#' @param k Number of neighbours considered.
 #' @return The indexes of the observations determined to be outliers.
 #' @export
 #' @importFrom HDoutliers getHDmembers
 #' @importFrom FNN knn.dist
-advanced_HDoutliers <- function(data, members, alpha = 0.01) {
-  break_list <- function(x) {
-    max <- floor(nrow(data) / 20)
-    seq <- seq_along(x)
-    split(x, ceiling(seq / max))
-  }
+advanced_HDoutliers <- function(data, alpha = 0.01, k= 10) {
 
-  members <- lapply(members, break_list)
-  members <- unlist(members, recursive = FALSE, use.names = FALSE)
-  exemplars <- sapply(members, function(x) x[[1]])
-  names(members) <- exemplars
-
-
-  k <- ceiling(length(exemplars) / 20)
+# k <- ceiling(length(exemplars) / 20)
   if (k == 1) {
-    d <- as.vector(FNN::knn.dist(data[exemplars, ], 1))
+    d <- as.vector(FNN::knn.dist(data, 1))
   } else {
-    d_knn <- FNN::knn.dist(data[exemplars, ], k)
+    d_knn <- FNN::knn.dist(data, k)
     d_knn1 <- cbind(rep(0, nrow(d_knn)), d_knn)
     diff <- t(apply(d_knn1, 1, diff))
     max_diff <- apply(diff, 1, which.max)
@@ -140,10 +124,7 @@ advanced_HDoutliers <- function(data, members, alpha = 0.01) {
   }
 
   out_index <- find_theshold(d, alpha = 0.05,  outtail = "max")
-  ex <- exemplars[out_index]
-  out <- unlist(members[match(ex, exemplars)])
-  names(out) <- NULL
-  return(list(outliers = out, out_scores = d))
+  return(list(outliers = out_index, out_scores = d))
 }
 
 #' Find anomalies using high density regions of the irst two principal components of the high dimensional data set

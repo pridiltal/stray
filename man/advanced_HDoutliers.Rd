@@ -4,16 +4,16 @@
 \alias{advanced_HDoutliers}
 \title{Advanced HDoutliers}
 \usage{
-advanced_HDoutliers(data, members, alpha = 0.01)
+advanced_HDoutliers(data, alpha = 0.01, k = 10)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
 
-\item{members}{output of \code{\link{check_duplicates}}}
-
 \item{alpha}{Threshold for determining the cutoff for outliers. Observations are considered
 outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 distances between exemplars.}
+
+\item{k}{Number of neighbours considered.}
 }
 \value{
 The indexes of the observations determined to be outliers.
