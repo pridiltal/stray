@@ -31,7 +31,7 @@
 #' outliers <- find_HDoutliers(data)
 #' display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, alpha = 0.01,
-                            method = c("HDadv", "hdr", "ahull")) {
+                            method = c("knn_maxdiff", "hdr")) {
 
 
   data <- as.matrix(data)
@@ -46,12 +46,12 @@ find_HDoutliers <- function(data, alpha = 0.01,
     tag <- (1:r)[-na_act]
   }
 
-  if (method == "HDadv") {
+  if (method == "knn_maxdiff") {
     standardize <- function(z) {
       (z - stats::median(z)) / stats::IQR(z)
     }
     data <- apply(naomit_data, 2, standardize)
-    out <- advanced_HDoutliers(data,  alpha)
+    out <- use_KNN_maxdiff(data,  alpha)
   }
 
   if (method == "hdr") {
@@ -110,7 +110,7 @@ check_duplicates <- function(data) {
 #' @export
 #' @importFrom HDoutliers getHDmembers
 #' @importFrom FNN knn.dist
-advanced_HDoutliers <- function(data, alpha = 0.01, k= 10) {
+use_KNN_maxdiff <- function(data, alpha = 0.01, k= 10) {
 
 # k <- ceiling(length(exemplars) / 20)
   if (k == 1) {
