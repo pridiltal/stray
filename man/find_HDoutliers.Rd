@@ -4,8 +4,9 @@
 \alias{find_HDoutliers}
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
-find_HDoutliers(data, alpha = 0.01, method = c("knn_maxdiff", "hdr"),
-  knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute"))
+find_HDoutliers(data, alpha = 0.01, method = c("knn_maxdiff",
+  "knn_sum", "hdr"), knnsearchtype = c("FNN_auto", "FNN_brute",
+  "nabor_brute"))
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}

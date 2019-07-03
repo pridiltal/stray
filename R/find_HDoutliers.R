@@ -33,7 +33,7 @@
 #' outliers <- find_HDoutliers(data, method = "knn_maxdiff", knnsearchtype = "FNN_auto")
 #' display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, alpha = 0.01,
-                            method = c("knn_maxdiff", "hdr"),
+                            method = c("knn_maxdiff", "knn_sum", "hdr"),
                             knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute")) {
   data <- as.matrix(data)
   r <- nrow(data)
@@ -47,12 +47,13 @@ find_HDoutliers <- function(data, alpha = 0.01,
     tag <- (1:r)[-na_act]
   }
 
-  if (method == "knn_maxdiff") {
-    standardize <- function(z) {
-      (z - stats::median(z)) / stats::IQR(z)
-    }
-    data <- apply(naomit_data, 2, standardize)
-    out <- use_KNN_maxdiff(data, alpha, knnsearchtype = knnsearchtype)
+  standardize <- function(z) {
+    (z - stats::median(z)) / stats::IQR(z)
+  }
+  data <- apply(naomit_data, 2, standardize)
+
+  if (method %in% c("knn_maxdiff", "knn_sum") ) {
+    out <- use_KNN(data, alpha, method =method,   knnsearchtype = knnsearchtype)
   }
   if (method == "hdr") {
     out <- hdr_outliers(data)
@@ -106,13 +107,15 @@ check_duplicates <- function(data) {
 #'  outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
 #' @param k Number of neighbours considered.
+#' @param method Outlier detection method used for detecting outlier in the high dimensional space.
 #' @param knnsearchtype A character vector indicating the search type for k- nearest-neighbors.
 #' @return The indexes of the observations determined to be outliers.
 #' @export
 #' @importFrom HDoutliers getHDmembers
 #' @importFrom FNN knn.dist
 #' @importFrom nabor knn
-use_KNN_maxdiff <- function(data, alpha = 0.01, k = 10, knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute")) {
+use_KNN <- function(data, alpha = 0.01, k = 10, method = c("knn_maxdiff", "knn_sum", "hdr"),
+                            knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute")) {
 
   # k <- ceiling(length(exemplars) / 20)
   if (k == 1) {
@@ -128,10 +131,18 @@ use_KNN_maxdiff <- function(data, alpha = 0.01, k = 10, knnsearchtype = c("FNN_a
       kdist <- nabor::knn(data, k = k + 1, searchtype = "brute")
       d_knn <- kdist$nn.dists[, -1]
     }
+
+    if(method == "knn_maxdiff" )
+    {
     d_knn1 <- cbind(rep(0, nrow(d_knn)), d_knn)
     diff <- t(apply(d_knn1, 1, diff))
     max_diff <- apply(diff, 1, which.max)
     d <- d_knn[cbind(1:nrow(d_knn), max_diff)]
+    }
+    if(method == "knn_sum" )
+    {
+      d <- t(apply(d_knn, 1, sum))
+    }
   }
 
   out_index <- find_theshold(d, alpha = 0.05, outtail = "max")
