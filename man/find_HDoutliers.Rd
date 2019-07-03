@@ -4,7 +4,8 @@
 \alias{find_HDoutliers}
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
-find_HDoutliers(data, alpha = 0.01, method = c("knn_maxdiff", "hdr"))
+find_HDoutliers(data, alpha = 0.01, method = c("knn_maxdiff", "hdr"),
+  knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute"))
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -14,6 +15,10 @@ outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the ne
 distances between exemplars.}
 
 \item{method}{Outlier detection method used for detecting outlier in the high dimensional space.}
+
+\item{knnsearchtype}{A character vector indicating the search type for k- nearest-neighbors.}
+
+\item{...}{Other arguments get passed to the find_HDoutliers functions.}
 }
 \value{
 The indexes of the observations determined to be outliers.
@@ -26,7 +31,7 @@ Detect anomalies in high dimensional data. This is a modification of
 require(ggplot2)
 set.seed(1234)
 data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
-outliers <- find_HDoutliers(data)
+outliers <- find_HDoutliers(data, method = "knn_maxdiff", knnsearchtype = "FNN_auto")
 display_HDoutliers(data,outliers )
 
 
@@ -36,7 +41,7 @@ nout <- 10 # number of outliers
 typical_data <- tibble::as.tibble(matrix(rnorm(2*n), ncol = 2, byrow = TRUE))
 out <- tibble::as.tibble(matrix(5*runif(2*nout,min=-5,max=5), ncol = 2, byrow = TRUE))
 data <- rbind(out, typical_data )
-outliers <- find_HDoutliers(data)
+outliers <- find_HDoutliers(data, method = "knn_maxdiff", knnsearchtype = "FNN_auto")
 display_HDoutliers(data, outliers)
 }
 \references{

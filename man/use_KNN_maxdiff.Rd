@@ -4,7 +4,8 @@
 \alias{use_KNN_maxdiff}
 \title{Advanced HDoutliers}
 \usage{
-use_KNN_maxdiff(data, alpha = 0.01, k = 10)
+use_KNN_maxdiff(data, alpha = 0.01, k = 10,
+  knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute"))
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -14,6 +15,8 @@ outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution 
 distances between exemplars.}
 
 \item{k}{Number of neighbours considered.}
+
+\item{knnsearchtype}{A character vector indicating the search type for k- nearest-neighbors.}
 }
 \value{
 The indexes of the observations determined to be outliers.

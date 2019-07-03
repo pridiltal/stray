@@ -7,6 +7,8 @@
 #'  outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
 #' @param method Outlier detection method used for detecting outlier in the high dimensional space.
+#' @param knnsearchtype A character vector indicating the search type for k- nearest-neighbors.
+#' @param ... Other arguments get passed to the find_HDoutliers functions.
 #' @return The indexes of the observations determined to be outliers.
 #' @seealso \code{\link{check_duplicates}}
 #' @export
@@ -18,7 +20,7 @@
 #' require(ggplot2)
 #' set.seed(1234)
 #' data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
-#' outliers <- find_HDoutliers(data)
+#' outliers <- find_HDoutliers(data, method = "knn_maxdiff", knnsearchtype = "FNN_auto")
 #' display_HDoutliers(data,outliers )
 #'
 #'
@@ -28,10 +30,11 @@
 #' typical_data <- tibble::as.tibble(matrix(rnorm(2*n), ncol = 2, byrow = TRUE))
 #' out <- tibble::as.tibble(matrix(5*runif(2*nout,min=-5,max=5), ncol = 2, byrow = TRUE))
 #' data <- rbind(out, typical_data )
-#' outliers <- find_HDoutliers(data)
+#' outliers <- find_HDoutliers(data, method = "knn_maxdiff", knnsearchtype = "FNN_auto")
 #' display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, alpha = 0.01,
-                            method = c("knn_maxdiff", "hdr")) {
+                            method = c("knn_maxdiff", "hdr"),
+                            knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute")) {
 
 
   data <- as.matrix(data)
@@ -51,9 +54,8 @@ find_HDoutliers <- function(data, alpha = 0.01,
       (z - stats::median(z)) / stats::IQR(z)
     }
     data <- apply(naomit_data, 2, standardize)
-    out <- use_KNN_maxdiff(data,  alpha)
+    out <- use_KNN_maxdiff(data,  alpha, knnsearchtype= knnsearchtype)
   }
-
   if (method == "hdr") {
     out <- hdr_outliers(data)
   }
@@ -106,17 +108,28 @@ check_duplicates <- function(data) {
 #'  outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
 #' @param k Number of neighbours considered.
+#' @param knnsearchtype A character vector indicating the search type for k- nearest-neighbors.
 #' @return The indexes of the observations determined to be outliers.
 #' @export
 #' @importFrom HDoutliers getHDmembers
 #' @importFrom FNN knn.dist
-use_KNN_maxdiff <- function(data, alpha = 0.01, k= 10) {
+#' @importFrom nabor knn
+use_KNN_maxdiff <- function(data, alpha = 0.01, k =10, knnsearchtype= c("FNN_auto", "FNN_brute", "nabor_brute")) {
 
 # k <- ceiling(length(exemplars) / 20)
   if (k == 1) {
     d <- as.vector(FNN::knn.dist(data, 1))
   } else {
-    d_knn <- FNN::knn.dist(data, k)
+    #if(knnsearchtype %in% c("FNN_auto", "FNN_brute") )
+    if(knnsearchtype == "FNN_auto" )
+    {d_knn <- FNN::knn.dist(data, k, algorithm = "kd_tree")}
+    if(knnsearchtype == "FNN_brute" )
+    {d_knn <- FNN::knn.dist(data, k, algorithm = "brute")}
+    if(knnsearchtype=="nabor_brute")
+    {
+      kdist <- nabor::knn(data, k = k+1, searchtype = "brute")
+      d_knn <- kdist$nn.dists[,-1]
+    }
     d_knn1 <- cbind(rep(0, nrow(d_knn)), d_knn)
     diff <- t(apply(d_knn1, 1, diff))
     max_diff <- apply(diff, 1, which.max)
