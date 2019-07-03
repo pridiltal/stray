@@ -67,7 +67,6 @@ find_HDoutliers <- function(data, alpha = 0.01,
   return(list(outliers = outliers, out_scores = out$out_scores, type= type))
 }
 
-
 #' Check duplicates
 #'
 #' @description  Check duplicates by giving a one-to-one mapping from unique observations to rows of a data matrix
