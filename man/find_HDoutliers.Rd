@@ -6,7 +6,7 @@
 \usage{
 find_HDoutliers(data, alpha = 0.01, method = c("knn_maxdiff",
   "knn_sum", "hdr"), knnsearchtype = c("FNN_auto", "FNN_brute",
-  "nabor_brute"))
+  "nabor_brute"), normalize = "unitize")
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -19,7 +19,9 @@ distances between exemplars.}
 
 \item{knnsearchtype}{A character vector indicating the search type for k- nearest-neighbors.}
 
-\item{...}{Other arguments get passed to the find_HDoutliers functions.}
+\item{normalize}{Method to normalize the columns of the data. This prevents variables with large variances
+having disproportional influence on Euclidean distances. Two options are available "standardize" or "unitize".
+Default is set to "unitize"}
 }
 \value{
 The indexes of the observations determined to be outliers.
