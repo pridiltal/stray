@@ -4,9 +4,9 @@
 \alias{find_HDoutliers}
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
-find_HDoutliers(data, alpha = 0.01, method = c("knn_maxdiff",
-  "knn_sum", "hdr"), knnsearchtype = c("FNN_auto", "FNN_brute",
-  "nabor_brute"), normalize = "unitize")
+find_HDoutliers(data, alpha = 0.01, k = 10, method = c("knn_maxdiff",
+  "knn_sum", "low_dim_knn", "hdr"), knnsearchtype = c("FNN_auto",
+  "FNN_brute", "nabor_brute"), normalize = "unitize")
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -15,7 +15,9 @@ find_HDoutliers(data, alpha = 0.01, method = c("knn_maxdiff",
 outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 distances between exemplars.}
 
-\item{method}{Outlier detection method used for detecting outlier in the high dimensional space.}
+\item{k}{Number of neighbours considered.}
+
+\item{method}{Outlier scoring method}
 
 \item{knnsearchtype}{A character vector indicating the search type for k- nearest-neighbors.}
 

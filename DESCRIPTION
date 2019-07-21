@@ -3,8 +3,7 @@ Type: Package
 Title: Anomaly Detection in High Dimensional and Temporal Data
 Version: 0.1.0.9000
 Depends: R (>= 3.4.0)
-Imports: HDoutliers,
-    FNN,
+Imports: FNN,
     ggplot2,
     mclust,
     tourr,
@@ -14,7 +13,8 @@ Imports: HDoutliers,
     stats,
     ks,
     hdrcde,
-    nabor
+    nabor,
+    dimRed
 Authors@R:
     c(person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
     person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("aut", "ths")),

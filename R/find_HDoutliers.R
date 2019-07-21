@@ -6,7 +6,8 @@
 #' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
 #'  outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
-#' @param method Outlier detection method used for detecting outlier in the high dimensional space.
+#' @param k Number of neighbours considered.
+#' @param method Outlier scoring method
 #' @param knnsearchtype A character vector indicating the search type for k- nearest-neighbors.
 #' @param normalize Method to normalize the columns of the data. This prevents variables with large variances
 #'  having disproportional influence on Euclidean distances. Two options are available "standardize" or "unitize".
@@ -34,8 +35,8 @@
 #' data <- rbind(out, typical_data)
 #' outliers <- find_HDoutliers(data, method = "knn_maxdiff", knnsearchtype = "FNN_auto")
 #' display_HDoutliers(data, outliers)
-find_HDoutliers <- function(data, alpha = 0.01,
-                            method = c("knn_maxdiff", "knn_sum", "hdr"),
+find_HDoutliers <- function(data, alpha = 0.01, k=10,
+                            method = c("knn_maxdiff", "knn_sum", "low_dim_knn",  "hdr"),
                             knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute"),
                             normalize = "unitize") {
   data <- as.matrix(data)
@@ -65,7 +66,10 @@ find_HDoutliers <- function(data, alpha = 0.01,
   data <- apply(as.matrix(naomit_data), 2, normalize)
 
   if (method %in% c("knn_maxdiff", "knn_sum")) {
-    out <- use_KNN(data, alpha, method = method, knnsearchtype = knnsearchtype)
+    out <- use_KNN(data, alpha, k=k,  method = method, knnsearchtype = knnsearchtype)
+  }
+  if (method == "low_dim_knn") {
+    out <- use_low_dim_KNN(data, alpha, k=k)
   }
   if (method == "hdr") {
     out <- hdr_outliers(data)
@@ -119,11 +123,10 @@ check_duplicates <- function(data) {
 #'  outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.
 #' @param k Number of neighbours considered.
-#' @param method Outlier detection method used for detecting outlier in the high dimensional space.
+#' @param method Outlier scoring method
 #' @param knnsearchtype A character vector indicating the search type for k- nearest-neighbors.
-#' @return The indexes of the observations determined to be outliers.
+#' @return The indexes of the observations determined to be outliers and the outlying scores
 #' @export
-#' @importFrom HDoutliers getHDmembers
 #' @importFrom FNN knn.dist
 #' @importFrom nabor knn
 use_KNN <- function(data, alpha = 0.01, k = 10, method = c("knn_maxdiff", "knn_sum", "hdr"),
@@ -131,8 +134,8 @@ use_KNN <- function(data, alpha = 0.01, k = 10, method = c("knn_maxdiff", "knn_s
 
   # k <- ceiling(length(exemplars) / 20)
   if (k == 1) {
-    d <- as.vector(FNN::knn.dist(data, 1))
-  } else {
+   d <- as.vector(FNN::knn.dist(data, 1))
+ } else {
     if (knnsearchtype == "FNN_auto") {
       d_knn <- FNN::knn.dist(data, k, algorithm = "kd_tree")
     }
@@ -155,6 +158,48 @@ use_KNN <- function(data, alpha = 0.01, k = 10, method = c("knn_maxdiff", "knn_s
     }
   }
 
+  out_index <- find_theshold(d, alpha = 0.05, outtail = "max")
+  return(list(outliers = out_index, out_scores = d))
+}
+
+
+#' Detect outliers in the low dimensional space using approximate knn distances
+#'
+#' @param data A vector, matrix, or data frame consisting of numeric and/or categorical variables.
+#' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
+#'  outliers outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
+#'  distances between exemplars.
+#' @param k Number of neighbours considered.
+#' @return The indexes of the observations determined to be outliers and the outlying scores
+#' @export
+#' @importFrom FNN knn.dist
+#' @importFrom nabor knn
+#' @import dimRed
+use_low_dim_KNN <- function(data, alpha = 0.01, k = 10) {
+
+  d= ncol(data)
+  if (k == 1) {
+    d <- as.vector(FNN::knn.dist(data, 1))
+  } else {
+  if (d>3)
+  {
+    dimdata <- dimRed::dimRedData(data)
+    leim <- dimRed::LaplacianEigenmaps()
+    emb <- leim@fun(dimdata, leim@stdpars)
+    data <- emb@data@data
+  }
+
+  kdist <- nabor::knn(data, k = k + 1, searchtype = "brute")
+  d_knn <- kdist$nn.dists[, -1]
+
+
+
+      d_knn1 <- cbind(rep(0, nrow(d_knn)), d_knn)
+      diff <- t(apply(d_knn1, 1, diff))
+      max_diff <- apply(diff, 1, which.max)
+      d <- d_knn[cbind(1:nrow(d_knn), max_diff)]
+
+}
   out_index <- find_theshold(d, alpha = 0.05, outtail = "max")
   return(list(outliers = out_index, out_scores = d))
 }
