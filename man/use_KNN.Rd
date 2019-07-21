@@ -2,11 +2,10 @@
 % Please edit documentation in R/find_HDoutliers.R
 \name{use_KNN}
 \alias{use_KNN}
-\title{Advanced HDoutliers}
+\title{Find outliers using kNN distance with maximum gap}
 \usage{
-use_KNN(data, alpha = 0.01, k = 10, method = c("knn_maxdiff",
-  "knn_sum", "hdr"), knnsearchtype = c("FNN_auto", "FNN_brute",
-  "nabor_brute"))
+use_KNN(data, alpha = 0.01, k = 10, knnsearchtype = c("FNN_auto",
+  "FNN_brute", "nabor_brute"))
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -17,13 +16,11 @@ distances between exemplars.}
 
 \item{k}{Number of neighbours considered.}
 
-\item{method}{Outlier scoring method}
-
 \item{knnsearchtype}{A character vector indicating the search type for k- nearest-neighbors.}
 }
 \value{
 The indexes of the observations determined to be outliers and the outlying scores
 }
 \description{
-Advanced HDoutliers
+Find outliers using kNN distance with maximum gap
 }

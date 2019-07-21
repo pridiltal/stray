@@ -21,7 +21,7 @@ The name \code{stray} comes from \code{STReam AnormalY}
 Wilkinson, L. (2016). Visualizing outliers. \url{https://www.cs.uic.edu/~wilkinson/Publications/outliers.pdf}
 }
 \seealso{
-The core functions in this package:  \code{\link{find_HDoutliers}}, \code{\link{check_duplicates}},
+The core functions in this package:  \code{\link{find_HDoutliers}},
 \code{\link{display_HDoutliers}}
 
 Full documentation and demos:

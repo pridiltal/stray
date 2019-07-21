@@ -8,7 +8,7 @@
 #' non-stationary behavior. The results show that our proposed algorithm improves the accuracy, and enables the
 #' trade-off between false positives and negatives to be better balanced.
 #'
-#' @seealso The core functions in this package:  \code{\link{find_HDoutliers}}, \code{\link{check_duplicates}},
+#' @seealso The core functions in this package:  \code{\link{find_HDoutliers}},
 #' \code{\link{display_HDoutliers}}
 #'
 #' Full documentation and demos:
