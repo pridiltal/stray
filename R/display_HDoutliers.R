@@ -7,9 +7,7 @@
 #' @param out A list containing output values produced by \code{\link[stray]{find_HDoutliers}}
 #' @param alpha Alpha level of the points
 #' @importFrom colorspace rainbow_hcl
-#' @importFrom animation saveGIF
 #' @import ggplot2
-#' @importFrom tourr animate_xy
 #' @export
 #' @examples
 #' data <- c(rnorm(100), 7, 7.5, rnorm(100, 20), 45)
@@ -46,8 +44,5 @@ display_HDoutliers <- function(data, out, alpha = 1) {
       xlab("Variable 1") +
       ylab("Variable 2")
     out_display
-  } else {
-    col <- ifelse(1:n %in% out$outliers, "red", "black")
-    tourr::animate_xy(data[, -(d + 1)], col = col, pch = 20)
   }
 }

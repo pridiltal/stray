@@ -35,7 +35,7 @@ require(ggplot2)
 set.seed(1234)
 data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
 outliers <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
-display_HDoutliers(data, outliers)
+#display_HDoutliers(data, outliers)
 
 
 set.seed(1234)
@@ -45,7 +45,7 @@ typical_data <- tibble::as.tibble(matrix(rnorm(2 * n), ncol = 2, byrow = TRUE))
 out <- tibble::as.tibble(matrix(5 * runif(2 * nout, min = -5, max = 5), ncol = 2, byrow = TRUE))
 data <- rbind(out, typical_data)
 outliers <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
-display_HDoutliers(data, outliers)
+#display_HDoutliers(data, outliers)
 }
 \references{
 {Wilkinson, L. (2018), `Visualizing big data

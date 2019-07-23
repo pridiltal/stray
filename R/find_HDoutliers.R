@@ -22,7 +22,7 @@
 #' set.seed(1234)
 #' data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
 #' outliers <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
-#' display_HDoutliers(data, outliers)
+#' #display_HDoutliers(data, outliers)
 #'
 #'
 #' set.seed(1234)
@@ -32,7 +32,7 @@
 #' out <- tibble::as.tibble(matrix(5 * runif(2 * nout, min = -5, max = 5), ncol = 2, byrow = TRUE))
 #' data <- rbind(out, typical_data)
 #' outliers <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
-#' display_HDoutliers(data, outliers)
+#' #display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, alpha = 0.01, k = 10,
                             knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute"),
                             normalize = "unitize") {
