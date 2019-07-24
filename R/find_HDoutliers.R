@@ -34,7 +34,8 @@
 #' outliers <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
 #' #display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, alpha = 0.01, k = 10,
-                            knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute"),
+                            knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute", "nabor_kd_linear_heap",
+                                              "nabor_kd_tree_heap"),
                             normalize = "unitize") {
   data <- as.matrix(data)
   r <- nrow(data)
@@ -83,7 +84,8 @@ find_HDoutliers <- function(data, alpha = 0.01, k = 10,
 #' @importFrom FNN knn.dist
 #' @importFrom nabor knn
 use_KNN <- function(data, alpha = 0.01, k = 10,
-                    knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute")) {
+                    knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute", "nabor_kd_linear_heap",
+                                      "nabor_kd_tree_heap")) {
 
   # k <- ceiling(length(exemplars) / 20)
   if (k == 1) {
@@ -97,6 +99,14 @@ use_KNN <- function(data, alpha = 0.01, k = 10,
     }
     if (knnsearchtype == "nabor_brute") {
       kdist <- nabor::knn(data, k = k + 1, searchtype = "brute")
+      d_knn <- kdist$nn.dists[, -1]
+    }
+    if (knnsearchtype == "nabor_kd_linear_heap") {
+      kdist <- nabor::knn(data, k = k + 1, searchtype = "kd_linear_heap")
+      d_knn <- kdist$nn.dists[, -1]
+    }
+    if (knnsearchtype == "nabor_kd_tree_heap") {
+      kdist <- nabor::knn(data, k = k + 1, searchtype = "kd_tree_heap")
       d_knn <- kdist$nn.dists[, -1]
     }
 
