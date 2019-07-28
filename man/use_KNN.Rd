@@ -4,9 +4,8 @@
 \alias{use_KNN}
 \title{Find outliers using kNN distance with maximum gap}
 \usage{
-use_KNN(data, alpha = 0.01, k = 10, knnsearchtype = c("FNN_auto",
-  "FNN_brute", "nabor_brute", "nabor_kd_linear_heap",
-  "nabor_kd_tree_heap"))
+use_KNN(data, alpha = 0.01, k = 10, knnsearchtype = c("kd_tree",
+  "brute"))
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}

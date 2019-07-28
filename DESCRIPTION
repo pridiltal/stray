@@ -5,17 +5,14 @@ Version: 0.1.0.9000
 Depends: R (>= 3.4.0)
 Imports: FNN,
     ggplot2,
-    mclust,
     colorspace,
     pcaPP,
     stats,
-    ks,
-    hdrcde,
-    nabor
+    ks
 Authors@R:
     c(person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
-    person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("aut", "ths")),
-    person("Kate", "Smith-Miles", email="kate.smith-miles@monash.edu", role=c("aut", "ths")))
+    person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("ths")),
+    person("Kate", "Smith-Miles", email="kate.smith-miles@monash.edu", role=c("ths")))
 Description:
     This is a modification of HDoutliers package. HDoutliers is a powerful algorithm for the 
     detection of anomalous observations in a dataset, which has (among other advantages) the ability 

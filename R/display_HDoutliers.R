@@ -11,14 +11,14 @@
 #' @export
 #' @examples
 #' data <- c(rnorm(100), 7, 7.5, rnorm(100, 20), 45)
-#' out <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
+#' out <- find_HDoutliers(data, knnsearchtype = "kd_tree")
 #' display_HDoutliers(data, out = out, alpha = out$out_scores)
 #' \dontrun{
 #' require(tourr)
 #' outpoints <- matrix(rnorm(12, mean = 200), nrow = 2)
 #' colnames(outpoints) <- colnames(flea[, -7])
 #' data <- rbind(flea[, -7], outpoints)
-#' outliers <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
+#' outliers <- find_HDoutliers(data, knnsearchtype = "kd_tree")
 #' display_HDoutliers(data, outliers)
 #' }
 display_HDoutliers <- function(data, out, alpha = 1) {

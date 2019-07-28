@@ -5,8 +5,7 @@
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
 find_HDoutliers(data, alpha = 0.01, k = 10,
-  knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute",
-  "nabor_kd_linear_heap", "nabor_kd_tree_heap"), normalize = "unitize")
+  knnsearchtype = c("kd_tree", "brute"), normalize = "unitize")
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -34,7 +33,7 @@ Detect anomalies in high dimensional data. This is a modification of
 require(ggplot2)
 set.seed(1234)
 data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
-outliers <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
+outliers <- find_HDoutliers(data, knnsearchtype = "kd_tree")
 #display_HDoutliers(data, outliers)
 
 
@@ -44,7 +43,7 @@ nout <- 10 # number of outliers
 typical_data <- tibble::as.tibble(matrix(rnorm(2 * n), ncol = 2, byrow = TRUE))
 out <- tibble::as.tibble(matrix(5 * runif(2 * nout, min = -5, max = 5), ncol = 2, byrow = TRUE))
 data <- rbind(out, typical_data)
-outliers <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
+outliers <- find_HDoutliers(data, knnsearchtype = "kd_tree")
 #display_HDoutliers(data, outliers)
 }
 \references{

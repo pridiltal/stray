@@ -21,7 +21,7 @@
 #' require(ggplot2)
 #' set.seed(1234)
 #' data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
-#' outliers <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
+#' outliers <- find_HDoutliers(data, knnsearchtype = "kd_tree")
 #' #display_HDoutliers(data, outliers)
 #'
 #'
@@ -31,11 +31,10 @@
 #' typical_data <- tibble::as.tibble(matrix(rnorm(2 * n), ncol = 2, byrow = TRUE))
 #' out <- tibble::as.tibble(matrix(5 * runif(2 * nout, min = -5, max = 5), ncol = 2, byrow = TRUE))
 #' data <- rbind(out, typical_data)
-#' outliers <- find_HDoutliers(data, knnsearchtype = "FNN_auto")
+#' outliers <- find_HDoutliers(data, knnsearchtype = "kd_tree")
 #' #display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, alpha = 0.01, k = 10,
-                            knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute", "nabor_kd_linear_heap",
-                                              "nabor_kd_tree_heap"),
+                            knnsearchtype = c("kd_tree", "brute"),
                             normalize = "unitize") {
   data <- as.matrix(data)
   r <- nrow(data)
@@ -82,34 +81,14 @@ find_HDoutliers <- function(data, alpha = 0.01, k = 10,
 #' @return The indexes of the observations determined to be outliers and the outlying scores
 #' @export
 #' @importFrom FNN knn.dist
-#' @importFrom nabor knn
 use_KNN <- function(data, alpha = 0.01, k = 10,
-                    knnsearchtype = c("FNN_auto", "FNN_brute", "nabor_brute", "nabor_kd_linear_heap",
-                                      "nabor_kd_tree_heap")) {
+                    knnsearchtype = c("kd_tree", "brute")) {
 
   # k <- ceiling(length(exemplars) / 20)
   if (k == 1) {
     d <- as.vector(FNN::knn.dist(data, 1))
   } else {
-    if (knnsearchtype == "FNN_auto") {
-      d_knn <- FNN::knn.dist(data, k, algorithm = "kd_tree")
-    }
-    if (knnsearchtype == "FNN_brute") {
-      d_knn <- FNN::knn.dist(data, k, algorithm = "brute") # Naive methods
-    }
-    if (knnsearchtype == "nabor_brute") {
-      kdist <- nabor::knn(data, k = k + 1, searchtype = "brute")
-      d_knn <- kdist$nn.dists[, -1]
-    }
-    if (knnsearchtype == "nabor_kd_linear_heap") {
-      kdist <- nabor::knn(data, k = k + 1, searchtype = "kd_linear_heap")
-      d_knn <- kdist$nn.dists[, -1]
-    }
-    if (knnsearchtype == "nabor_kd_tree_heap") {
-      kdist <- nabor::knn(data, k = k + 1, searchtype = "kd_tree_heap")
-      d_knn <- kdist$nn.dists[, -1]
-    }
-
+    d_knn <- FNN::knn.dist(data, k, algorithm = knnsearchtype)
     d_knn1 <- cbind(rep(0, nrow(d_knn)), d_knn)
     diff <- t(apply(d_knn1, 1, diff))
     max_diff <- apply(diff, 1, which.max)
