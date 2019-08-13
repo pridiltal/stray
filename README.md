@@ -93,3 +93,27 @@ display_HDoutliers(data, outliers)
 ![plot of chunk twodim](man/figures/README-twodim-1.png)
 
 More examples are available from [here](https://arxiv.org/pdf/1908.04000.pdf) 
+
+
+```r
+outliers<-find_HDoutliers(data_c[,1:2], knnsearchtype= "brute")
+p <- display_HDoutliers(data_c[,1:2], outliers)+
+      ggplot2::ggtitle("data_c")+
+      theme(aspect.ratio = 1)
+
+print(p)
+```
+
+![plot of chunk dataa](man/figures/README-dataa-1.png)
+
+
+```r
+outliers<-find_HDoutliers(data_d[,1:2], knnsearchtype= "brute")
+p <- display_HDoutliers(data_d[,1:2], outliers)+
+      ggplot2::ggtitle("data_d")+
+      theme(aspect.ratio = 1)
+
+print(p)
+```
+
+![plot of chunk datad](man/figures/README-datad-1.png)
