@@ -34,7 +34,7 @@
 #' outliers <- find_HDoutliers(data, knnsearchtype = "kd_tree")
 #' #display_HDoutliers(data, outliers)
 find_HDoutliers <- function(data, alpha = 0.01, k = 10,
-                            knnsearchtype = c("kd_tree", "brute"),
+                            knnsearchtype = "brute",
                             normalize = "unitize") {
   data <- as.matrix(data)
   r <- nrow(data)

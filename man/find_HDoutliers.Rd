@@ -4,8 +4,8 @@
 \alias{find_HDoutliers}
 \title{Detect Anomalies in High Dimensional Data.}
 \usage{
-find_HDoutliers(data, alpha = 0.01, k = 10,
-  knnsearchtype = c("kd_tree", "brute"), normalize = "unitize")
+find_HDoutliers(data, alpha = 0.01, k = 10, knnsearchtype = "brute",
+  normalize = "unitize")
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
