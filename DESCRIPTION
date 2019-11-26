@@ -14,7 +14,7 @@ Authors@R:
     person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("ths")),
     person("Kate", "Smith-Miles", email="kate.smith-miles@monash.edu", role=c("ths")))
 Description:
-    This is a modification of HDoutliers package. The HDoutliers algorithm is a powerful 
+    This is a modification of 'HDoutliers' package. The 'HDoutliers' algorithm is a powerful 
     unsupervised algorithm for detecting anomalies in high-dimensional data, with a 
     strong theoretical foundation. However, it suffers from some limitations that 
     significantly hinder its performance level, under certain circumstances. In 
@@ -22,6 +22,7 @@ Description:
     define an anomaly as an observation that deviates markedly from the majority
     with a large distance gap. An approach based on extreme value theory is used 
     for the anomalous threshold calculation.
+BugReports: https://github.com/pridiltal/stray/issues
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
@@ -29,4 +30,4 @@ RoxygenNote: 6.1.1
 Suggests: knitr,
     rmarkdown,
     tibble
-VignetteBuilder: knitr
+

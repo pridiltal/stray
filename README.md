@@ -20,11 +20,11 @@ output: github_document
  
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/stray)](https://cran.r-project.org/package=stray)
-[![packageversion](https://img.shields.io/badge/Package%20version-1.0.0.9000-orange.svg?style=flat-square)](commits/master)
+[![packageversion](https://img.shields.io/badge/Package%20version-1.0.0-orange.svg?style=flat-square)](commits/master)
  
 ---
  
-[![Last-changedate](https://img.shields.io/badge/last%20change-2019--08--13-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2019--11--27-yellowgreen.svg)](/commits/master)
 
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -35,7 +35,7 @@ output: github_document
 
 Anomaly Detection in High Dimensional Data Space
 
-This package is a modification of [HDoutliers package](https://cran.r-project.org/web/packages/HDoutliers/index.html). The HDoutliers algorithm is a powerful unsupervised algorithm for detecting anomalies in high-dimensional data, with a strong theoretical foundation. However, it suffers from some
+This package is a modification of [HDoutliers package](https://CRAN.R-project.org/package=HDoutliers). The HDoutliers algorithm is a powerful unsupervised algorithm for detecting anomalies in high-dimensional data, with a strong theoretical foundation. However, it suffers from some
 limitations that significantly hinder its performance level, under certain circumstances. In this package, we propose an algorithm that addresses these limitations. We define an anomaly as an
 observation that deviates markedly from the majority with a large distance gap. An approach based on extreme value theory is used for the anomalous threshold calculation. 
 

@@ -1,9 +1,12 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
+^README\.md$
 ^logo\.png$
 ^README-.*\.png$
 ^\.travis\.yml$
 ^README\.html$
 ^docs
 ^\.RDataTmp
+.odt$
+
