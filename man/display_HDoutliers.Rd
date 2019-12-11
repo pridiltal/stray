@@ -17,14 +17,15 @@ Animate a 2D tour path with a scatterplot to visualize outliers.
 }
 \examples{
 data <- c(rnorm(100), 7, 7.5, rnorm(100, 20), 45)
-out <- find_HDoutliers(data, knnsearchtype = "kd_tree")
-display_HDoutliers(data, out = out)
-\dontrun{
-require(tourr)
-outpoints <- matrix(rnorm(12, mean = 200), nrow = 2)
-colnames(outpoints) <- colnames(flea[, -7])
-data <- rbind(flea[, -7], outpoints)
-outliers <- find_HDoutliers(data, knnsearchtype = "kd_tree")
-display_HDoutliers(data, outliers)
-}
+output <- find_HDoutliers(data, knnsearchtype = "kd_tree")
+display_HDoutliers(data, out = output)
+
+data <- rbind(matrix(rnorm(96), ncol = 2), c(10,12),c(3,7))
+output <- find_HDoutliers(data, knnsearchtype = "brute")
+display_HDoutliers(data, out = output)
+
+data <- rbind(matrix(rnorm(144), ncol = 3), c(10,12,10),c(3,7,10))
+output <- find_HDoutliers(data, knnsearchtype = "brute")
+display_HDoutliers(data, out = output)
+
 }

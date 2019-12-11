@@ -6,20 +6,24 @@
 #' and/or categorical variables.
 #' @param out A list containing output values produced by \code{\link[stray]{find_HDoutliers}}
 #' @importFrom colorspace rainbow_hcl
+#' @importFrom pcaPP PCAproj
 #' @import ggplot2
 #' @export
 #' @examples
 #' data <- c(rnorm(100), 7, 7.5, rnorm(100, 20), 45)
-#' out <- find_HDoutliers(data, knnsearchtype = "kd_tree")
-#' display_HDoutliers(data, out = out)
-#' \dontrun{
-#' require(tourr)
-#' outpoints <- matrix(rnorm(12, mean = 200), nrow = 2)
-#' colnames(outpoints) <- colnames(flea[, -7])
-#' data <- rbind(flea[, -7], outpoints)
-#' outliers <- find_HDoutliers(data, knnsearchtype = "kd_tree")
-#' display_HDoutliers(data, outliers)
-#' }
+#' output <- find_HDoutliers(data, knnsearchtype = "kd_tree")
+#' display_HDoutliers(data, out = output)
+#'
+#'
+#' data <- rbind(matrix(rnorm(96), ncol = 2), c(10,12),c(3,7))
+#' output <- find_HDoutliers(data, knnsearchtype = "brute")
+#' display_HDoutliers(data, out = output)
+#'
+#'
+#' data <- rbind(matrix(rnorm(144), ncol = 3), c(10,12,10),c(3,7,10))
+#' output <- find_HDoutliers(data, knnsearchtype = "brute")
+#' display_HDoutliers(data, out = output)
+#'
 display_HDoutliers <- function(data, out) {
   data <- as.data.frame(data)
   d <- ncol(data)
@@ -41,7 +45,21 @@ display_HDoutliers <- function(data, out) {
       geom_point(aes_string(x = data[, 1], y = data[, 2], colour = "outcon")) +
       scale_colour_manual(name = "Type", values = c("outlier" = "red", "typical" = "black")) +
       xlab("Variable 1") +
-      ylab("Variable 2")
+      ylab("Variable 2") +
+      theme(aspect.ratio = 1)
     out_display
+  } else if (d > 2)
+  {
+    rpc <- pcaPP::PCAproj(data, k = 2, scale = sd, center = mean)
+    data$PC1 <- rpc$scores[, 1]
+    data$PC2 <- rpc$scores[, 2]
+    out_display <- ggplot(data) +
+      geom_point(aes_string(x = "PC1", y = "PC2", colour = "outcon")) +
+      scale_colour_manual(name = "Type", values = c("outlier" = "red", "typical" = "black")) +
+      xlab("PC 1") +
+      ylab("PC 2") +
+      theme(aspect.ratio = 1)
+    out_display
+
   }
 }

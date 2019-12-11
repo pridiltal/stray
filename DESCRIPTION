@@ -10,16 +10,17 @@ Imports: FNN,
     stats,
     ks
 Authors@R:
-    c(person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
-    person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("ths")),
-    person("Kate", "Smith-Miles", email="kate.smith-miles@monash.edu", role=c("ths")))
+    c(person("Priyanga Dilini", "Talagala", email="pritalagala@gmail.com", role= c("aut","cre"), comment = c(ORCID = "0000-0003-2870-7449")),
+    person("Rob J", "Hyndman", email="rob.hyndman@monash.edu", role=c("ths"), comment = c(ORCID = "0000-0002-2140-5352")),
+    person("Kate", "Smith-Miles", email="smith-miles@unimelb.edu.au", role=c("ths")))
 Description:
     This is a modification of 'HDoutliers' package. The 'HDoutliers' algorithm is a powerful 
     unsupervised algorithm for detecting anomalies in high-dimensional data, with a 
     strong theoretical foundation. However, it suffers from some limitations that 
-    significantly hinder its performance level, under certain circumstances. In 
-    this package, we propose an algorithm that addresses these limitations. We 
-    define an anomaly as an observation that deviates markedly from the majority
+    significantly hinder its performance level, under certain circumstances. This package 
+    implements the algorithm proposed in Talagala, Hyndman and Smith-Miles (2019) 
+    <arXiv:https://arxiv.org/abs/1908.04000>  for detecting anomalies in high-dimensional data
+    that addresses these limitations of 'HDoutliers' algorithm. We define an anomaly as an observation that deviates markedly from the majority
     with a large distance gap. An approach based on extreme value theory is used 
     for the anomalous threshold calculation.
 BugReports: https://github.com/pridiltal/stray/issues
