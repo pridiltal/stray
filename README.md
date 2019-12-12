@@ -90,6 +90,20 @@ display_HDoutliers(data, outliers)
 
 ![plot of chunk twodim](man/figures/README-twodim-1.png)
 
+### Three dimensional dataset with 2 outliers
+
+For data with more than two dimensions, two dimensional scatterplot is produced using the first two pricipal components.
+
+
+```r
+data <- rbind(matrix(rnorm(144), ncol = 3), c(10,12,10),c(3,7,10))
+output <- find_HDoutliers(data, knnsearchtype = "brute")
+display_HDoutliers(data, out = output)
+```
+
+![plot of chunk datad3](man/figures/README-datad3-1.png)
+
+
 More examples are available from our paper [Anomaly Detection in High Dimensional Data](https://www.monash.edu/business/ebs/research/publications/ebs/wp20-2019.pdf) 
 
 
@@ -114,15 +128,3 @@ print(p)
 
 ![plot of chunk datad](man/figures/README-datad-1.png)
 
-### Three dimensional dataset with 2 outliers
-
-For data with more than two dimensions, two dimensional scatterplot is produced using the first two pricipal components.
-
-
-```r
-data <- rbind(matrix(rnorm(144), ncol = 3), c(10,12,10),c(3,7,10))
-output <- find_HDoutliers(data, knnsearchtype = "brute")
-display_HDoutliers(data, out = output)
-```
-
-![plot of chunk datad3](man/figures/README-datad3-1.png)
