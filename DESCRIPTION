@@ -19,7 +19,7 @@ Description:
     strong theoretical foundation. However, it suffers from some limitations that 
     significantly hinder its performance level, under certain circumstances. This package 
     implements the algorithm proposed in Talagala, Hyndman and Smith-Miles (2019) 
-    <arXiv:https://arxiv.org/abs/1908.04000>  for detecting anomalies in high-dimensional data
+    <arXiv:1908.04000>  for detecting anomalies in high-dimensional data
     that addresses these limitations of 'HDoutliers' algorithm. We define an anomaly as an observation that deviates markedly from the majority
     with a large distance gap. An approach based on extreme value theory is used 
     for the anomalous threshold calculation.
