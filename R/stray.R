@@ -13,9 +13,13 @@
 #'
 #' Full documentation and demos:
 #' @references
-#' Wilkinson, L. (2016). Visualizing outliers. \url{https://www.cs.uic.edu/~wilkinson/Publications/outliers.pdf}
+#' Talagala, P. D., Hyndman, R. J., & Smith-Miles, K. (2019). Anomaly Detection in High Dimensional Data.
+#'  \url{https://www.monash.edu/business/ebs/research/publications/ebs/wp20-2019.pdf}
 #'
-#' @note The name \code{stray} comes from \code{STReam AnormalY}
+#' Wilkinson, L. (2017). Visualizing big data outliers through distributed
+#' aggregation. IEEE transactions on visualization and computer graphics, 24(1), 256-266.
+#' \url{https://www.cs.uic.edu/~wilkinson/Publications/outliers.pdf}
+#' @note The name \code{stray} comes from \code{Search and TRace AnomalY}
 #' @docType package
 #' @name  stray
 NULL

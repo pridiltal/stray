@@ -1,6 +1,6 @@
 #' Find Outlier Threshold
 #'
-#' @param outlier_score A vector of outlier scores. Can bve a named vector or a vector with no names.
+#' @param outlier_score A vector of outlier scores. Can be a named vector or a vector with no names.
 #' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
 #'  outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.

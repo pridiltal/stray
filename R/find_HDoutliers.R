@@ -2,7 +2,7 @@
 #'
 #' @description  Detect anomalies in high dimensional data. This is a modification of
 #' \code{\link[HDoutliers]{HDoutliers}}.
-#' @param data A vector, matrix, or data frame consisting of numeric and/or categorical variables.
+#' @param data A vector, matrix, or data frame consisting of numerical variables.
 #' @param alpha Threshold for determining the cutoff for outliers. Observations are considered
 #'  outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
 #'  distances between exemplars.

@@ -8,7 +8,7 @@ find_HDoutliers(data, alpha = 0.01, k = 10, knnsearchtype = "brute",
   normalize = "unitize")
 }
 \arguments{
-\item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
+\item{data}{A vector, matrix, or data frame consisting of numerical variables.}
 
 \item{alpha}{Threshold for determining the cutoff for outliers. Observations are considered
 outliers if they fall in the \eqn{(1- alpha)} tail of the distribution of the nearest-neighbor
@@ -34,17 +34,17 @@ require(ggplot2)
 set.seed(1234)
 data <- c(rnorm(1000, mean = -6), 0, rnorm(1000, mean = 6))
 outliers <- find_HDoutliers(data, knnsearchtype = "kd_tree")
-#display_HDoutliers(data, outliers)
+
 
 
 set.seed(1234)
 n <- 1000 # number of observations
 nout <- 10 # number of outliers
-typical_data <- tibble::as.tibble(matrix(rnorm(2 * n), ncol = 2, byrow = TRUE))
-out <- tibble::as.tibble(matrix(5 * runif(2 * nout, min = -5, max = 5), ncol = 2, byrow = TRUE))
+typical_data <- matrix(rnorm(2 * n), ncol = 2, byrow = TRUE)
+out <- matrix(5 * runif(2 * nout, min = -5, max = 5), ncol = 2, byrow = TRUE)
 data <- rbind(out, typical_data)
-outliers <- find_HDoutliers(data, knnsearchtype = "kd_tree")
-#display_HDoutliers(data, outliers)
+outliers <- find_HDoutliers(data, knnsearchtype = "brute")
+
 }
 \references{
 {Wilkinson, L. (2018), `Visualizing big data

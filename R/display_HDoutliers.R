@@ -1,13 +1,14 @@
 #' Display outliers with a scatterplot
 #'
-#' Animate a 2D tour path with a scatterplot to visualize outliers.
-#'
-#' @param data A vector, matrix, or data frame consisting of numeric
-#' and/or categorical variables.
+#' @description Provide a 2D scatterplot of data for visual exploration.
+#' For data with more than two dimensions, two dimensional scatterplot is produced
+#' using the first two pricipal components.
+#' @param data A vector, matrix, or data frame consisting of numerical variables.
 #' @param out A list containing output values produced by \code{\link[stray]{find_HDoutliers}}
 #' @importFrom colorspace rainbow_hcl
 #' @importFrom pcaPP PCAproj
 #' @import ggplot2
+#' @return A ggplot object of data space with detected outliers (if any).
 #' @export
 #' @examples
 #' data <- c(rnorm(100), 7, 7.5, rnorm(100, 20), 45)

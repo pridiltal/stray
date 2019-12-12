@@ -7,22 +7,28 @@
 display_HDoutliers(data, out)
 }
 \arguments{
-\item{data}{A vector, matrix, or data frame consisting of numeric
-and/or categorical variables.}
+\item{data}{A vector, matrix, or data frame consisting of numerical variables.}
 
 \item{out}{A list containing output values produced by \code{\link[stray]{find_HDoutliers}}}
 }
+\value{
+A ggplot object of data space with detected outliers (if any).
+}
 \description{
-Animate a 2D tour path with a scatterplot to visualize outliers.
+Provide a 2D scatterplot of data for visual exploration.
+For data with more than two dimensions, two dimensional scatterplot is produced
+using the first two pricipal components.
 }
 \examples{
 data <- c(rnorm(100), 7, 7.5, rnorm(100, 20), 45)
 output <- find_HDoutliers(data, knnsearchtype = "kd_tree")
 display_HDoutliers(data, out = output)
 
+
 data <- rbind(matrix(rnorm(96), ncol = 2), c(10,12),c(3,7))
 output <- find_HDoutliers(data, knnsearchtype = "brute")
 display_HDoutliers(data, out = output)
+
 
 data <- rbind(matrix(rnorm(144), ncol = 3), c(10,12,10),c(3,7,10))
 output <- find_HDoutliers(data, knnsearchtype = "brute")

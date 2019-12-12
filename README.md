@@ -20,11 +20,11 @@ output: github_document
  
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/stray)](https://cran.r-project.org/package=stray)
-[![packageversion](https://img.shields.io/badge/Package%20version-1.0.0-orange.svg?style=flat-square)](commits/master)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.1.0-orange.svg?style=flat-square)](commits/master)
  
 ---
  
-[![Last-changedate](https://img.shields.io/badge/last%20change-2019--11--27-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2019--12--12-yellowgreen.svg)](/commits/master)
 
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -81,25 +81,22 @@ display_HDoutliers(data, outliers)
 set.seed(1234)
 n <- 1000 # number of observations
 nout <- 10 # number of outliers
-typical_data <- tibble::as.tibble(matrix(rnorm(2*n), ncol = 2, byrow = TRUE))
-#> Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
-#> This warning is displayed once per session.
-out <- tibble::as.tibble(matrix(5*runif(2*nout,min=-5,max=5), ncol = 2, byrow = TRUE))
-data <- dplyr::bind_rows(out, typical_data )
+typical_data <- matrix(rnorm(2*n), ncol = 2, byrow = TRUE)
+out <- matrix(5*runif(2*nout,min=-5,max=5), ncol = 2, byrow = TRUE)
+data <- rbind(out, typical_data )
 outliers <- find_HDoutliers(data, knnsearchtype = "brute")
 display_HDoutliers(data, outliers)
 ```
 
 ![plot of chunk twodim](man/figures/README-twodim-1.png)
 
-More examples are available from [here](https://arxiv.org/pdf/1908.04000.pdf) 
+More examples are available from our paper [Anomaly Detection in High Dimensional Data](https://www.monash.edu/business/ebs/research/publications/ebs/wp20-2019.pdf) 
 
 
 ```r
 outliers<-find_HDoutliers(data_c[,1:2], knnsearchtype= "brute")
 p <- display_HDoutliers(data_c[,1:2], outliers)+
-      ggplot2::ggtitle("data_c")+
-      theme(aspect.ratio = 1)
+      ggplot2::ggtitle("data_c")
 
 print(p)
 ```
@@ -110,10 +107,22 @@ print(p)
 ```r
 outliers<-find_HDoutliers(data_d[,1:2], knnsearchtype= "brute")
 p <- display_HDoutliers(data_d[,1:2], outliers)+
-      ggplot2::ggtitle("data_d")+
-      theme(aspect.ratio = 1)
+      ggplot2::ggtitle("data_d")
 
 print(p)
 ```
 
 ![plot of chunk datad](man/figures/README-datad-1.png)
+
+### Three dimensional dataset with 2 outliers
+
+For data with more than two dimensions, two dimensional scatterplot is produced using the first two pricipal components.
+
+
+```r
+data <- rbind(matrix(rnorm(144), ncol = 3), c(10,12,10),c(3,7,10))
+output <- find_HDoutliers(data, knnsearchtype = "brute")
+display_HDoutliers(data, out = output)
+```
+
+![plot of chunk datad3](man/figures/README-datad3-1.png)
