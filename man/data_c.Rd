@@ -4,11 +4,13 @@
 \name{data_c}
 \alias{data_c}
 \title{A dataset with local anomalies and  micro clusters}
-\format{A data frame with 1009 rows and 3 variables:
+\format{
+A data frame with 1009 rows and 3 variables:
  \describe{
 \item{x }{numerical variable}
 \item{y }{numerical variable}
-\item{type}{Type of a data point : Typical or Outlier}}}
+\item{type}{Type of a data point : Typical or Outlier}}
+}
 \usage{
 data_c
 }

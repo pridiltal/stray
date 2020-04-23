@@ -4,11 +4,13 @@
 \name{data_d}
 \alias{data_d}
 \title{A wheel dataset with  two inliers}
-\format{A data frame with 1002 rows and 3 variables:
+\format{
+A data frame with 1002 rows and 3 variables:
  \describe{
 \item{x }{numerical variable}
 \item{y }{numerical variable}
-\item{type}{Type of a data point : Typical or Outlier}}}
+\item{type}{Type of a data point : Typical or Outlier}}
+}
 \usage{
 data_d
 }

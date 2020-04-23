@@ -4,11 +4,13 @@
 \name{data_a}
 \alias{data_a}
 \title{A dataset with an outlier}
-\format{A data frame with 1001 rows and 3 variables:
+\format{
+A data frame with 1001 rows and 3 variables:
  \describe{
 \item{x }{numerical variable}
 \item{y }{numerical variable}
-\item{type}{Type of a data point : Typical or Outlier}}}
+\item{type}{Type of a data point : Typical or Outlier}}
+}
 \usage{
 data_a
 }

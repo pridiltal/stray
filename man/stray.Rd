@@ -3,7 +3,6 @@
 \docType{package}
 \name{stray}
 \alias{stray}
-\alias{stray-package}
 \title{stray: A package for robust anomaly detection in data streams with concept drift}
 \description{
 This package is a modification of \code{\link[HDoutliers]{HDoutliers}} package. \code{HDoutliers} is a powerful algorithm for the

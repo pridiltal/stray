@@ -95,6 +95,6 @@ use_KNN <- function(data, alpha = 0.01, k = 10,
     d <- d_knn[cbind(1:nrow(d_knn), max_diff)]
   }
 
-  out_index <- find_theshold(d, alpha = 0.05, outtail = "max")
+  out_index <- find_threshold(d, alpha = 0.05, outtail = "max")
   return(list(outliers = out_index, out_scores = d))
 }

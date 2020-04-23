@@ -4,13 +4,15 @@
 \name{ped_data}
 \alias{ped_data}
 \title{Dataset with pedestrian counts}
-\format{A data frame with 33024 rows and 5 variables:
+\format{
+A data frame with 33024 rows and 5 variables:
  \describe{
 \item{Sensor }{Sensor location}
 \item{Date_Time }{Time and date }
 \item{Date}{Date}
 \item{Time}{Time}
-\item{Count}{Pedestrian count}}}
+\item{Count}{Pedestrian count}}
+}
 \usage{
 ped_data
 }

@@ -4,11 +4,13 @@
 \name{wheel1}
 \alias{wheel1}
 \title{wheel data set with inlier and outlier.}
-\format{A data frame with 1002 rows and 3 variables:
+\format{
+A data frame with 1002 rows and 3 variables:
  \describe{
 \item{x }{numerical variable}
 \item{y }{numerical variable}
-\item{type}{Type of a data point : Typical or Outlier}}}
+\item{type}{Type of a data point : Typical or Outlier}}
+}
 \usage{
 wheel1
 }

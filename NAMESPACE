@@ -2,7 +2,7 @@
 
 export(display_HDoutliers)
 export(find_HDoutliers)
-export(find_theshold)
+export(find_threshold)
 export(use_KNN)
 import(ggplot2)
 import(stats)

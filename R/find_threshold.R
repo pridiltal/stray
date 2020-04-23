@@ -7,7 +7,7 @@
 #' @param outtail Direction of the outlier tail.
 #' @return The indexes (or names, if the input is named vactor) of the observations determined to be outliers.
 #' @export
-find_theshold <- function(outlier_score, alpha = 0.05, outtail = c("max", "min")) {
+find_threshold <- function(outlier_score, alpha = 0.05, outtail = c("max", "min")) {
 
   n <- length(outlier_score)
   if(outtail == "min")
