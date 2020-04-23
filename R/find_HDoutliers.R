@@ -81,7 +81,7 @@ find_HDoutliers <- function(data, alpha = 0.01, k = 10,
 #' @return The indexes of the observations determined to be outliers and the outlying scores
 #' @export
 #' @importFrom FNN knn.dist
-use_KNN <- function(data, alpha = 0.01, k = 10,
+use_KNN <- function(data, alpha = 0.05, k = 10,
                     knnsearchtype = c("kd_tree", "brute")) {
 
   # k <- ceiling(length(exemplars) / 20)
