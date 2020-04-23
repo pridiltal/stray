@@ -102,7 +102,7 @@ display_HDoutliers(data, out = output)
 ```
 
 ![plot of chunk datad3](man/figures/README-datad3-1.png)
-
+gitn
 
 More examples are available from our paper [Anomaly Detection in High Dimensional Data](https://www.monash.edu/business/ebs/research/publications/ebs/wp20-2019.pdf) 
 

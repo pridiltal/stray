@@ -103,7 +103,7 @@ data <- rbind(matrix(rnorm(144), ncol = 3), c(10,12,10),c(3,7,10))
 output <- find_HDoutliers(data, knnsearchtype = "brute")
 display_HDoutliers(data, out = output)
 ```
-
+gitn
 
 More examples are available from our paper [Anomaly Detection in High Dimensional Data](https://www.monash.edu/business/ebs/research/publications/ebs/wp20-2019.pdf) 
 
