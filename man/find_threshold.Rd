@@ -4,7 +4,7 @@
 \alias{find_threshold}
 \title{Find Outlier Threshold}
 \usage{
-find_threshold(outlier_score, alpha = 0.05, outtail = c("max", "min"), p = 0.5)
+find_threshold(outlier_score, alpha, outtail = c("max", "min"), p)
 }
 \arguments{
 \item{outlier_score}{A vector of outlier scores. Can be a named vector or a vector with no names.}
@@ -16,7 +16,7 @@ distances between exemplars.}
 \item{outtail}{Direction of the outlier tail.}
 
 \item{p}{Proportion of possible candidates for outliers. This defines the starting point for the
-bottom up searching algorithm.  Default is set to 0.5.}
+bottom up searching algorithm.}
 }
 \value{
 The indexes (or names, if the input is named vactor) of the observations determined to be outliers.

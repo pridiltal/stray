@@ -6,10 +6,10 @@
 #'  distances between exemplars.
 #' @param outtail Direction of the outlier tail.
 #' @param p Proportion of possible candidates for outliers. This defines the starting point for the
-#' bottom up searching algorithm.  Default is set to 0.5.
+#' bottom up searching algorithm.
 #' @return The indexes (or names, if the input is named vactor) of the observations determined to be outliers.
 #' @export
-find_threshold <- function(outlier_score, alpha = 0.05, outtail = c("max", "min"), p = 0.5) {
+find_threshold <- function(outlier_score, alpha, outtail = c("max", "min"), p) {
 
   n <- length(outlier_score)
   if(outtail == "min")
