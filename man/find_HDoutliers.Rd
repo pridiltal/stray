@@ -28,7 +28,8 @@ distances between exemplars.}
 having disproportional influence on Euclidean distances. Two options are available "standardize" or "unitize".
 Default is set to "unitize"}
 
-\item{p}{Proportion to define the starting point for the bottom up searching algorithm.}
+\item{p}{Proportion of possible candidates for outliers. This defines the starting point for the
+bottom up searching algorithm. Default is set to 0.5.}
 }
 \value{
 The indexes of the observations determined to be outliers.

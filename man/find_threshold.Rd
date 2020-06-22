@@ -15,7 +15,8 @@ distances between exemplars.}
 
 \item{outtail}{Direction of the outlier tail.}
 
-\item{p}{Proportion to define the starting point for the bottom up searching algorithm.}
+\item{p}{Proportion of possible candidates for outliers. This defines the starting point for the
+bottom up searching algorithm.  Default is set to 0.5.}
 }
 \value{
 The indexes (or names, if the input is named vactor) of the observations determined to be outliers.

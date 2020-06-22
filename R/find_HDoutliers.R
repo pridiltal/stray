@@ -11,7 +11,8 @@
 #' @param normalize Method to normalize the columns of the data. This prevents variables with large variances
 #'  having disproportional influence on Euclidean distances. Two options are available "standardize" or "unitize".
 #'  Default is set to "unitize"
-#' @param p Proportion to define the starting point for the bottom up searching algorithm.
+#' @param p Proportion of possible candidates for outliers. This defines the starting point for the
+#' bottom up searching algorithm. Default is set to 0.5.
 #' @return The indexes of the observations determined to be outliers.
 #' @export
 #' @import stats
@@ -79,7 +80,8 @@ find_HDoutliers <- function(data, alpha = 0.01, k = 10,
 #'  distances between exemplars.
 #' @param k Number of neighbours considered.
 #' @param knnsearchtype A character vector indicating the search type for k- nearest-neighbors.
-#' @param p Proportion to define the starting point for the bottom up searching algorithm.
+#' @param p Proportion of possible candidates for outliers. This defines the starting point for the
+#' bottom up searching algorithm. Default is set to 0.5.
 #' @return The indexes of the observations determined to be outliers and the outlying scores.
 #' @export
 #' @importFrom FNN knn.dist

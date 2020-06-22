@@ -23,7 +23,8 @@ distances between exemplars.}
 
 \item{knnsearchtype}{A character vector indicating the search type for k- nearest-neighbors.}
 
-\item{p}{Proportion to define the starting point for the bottom up searching algorithm.}
+\item{p}{Proportion of possible candidates for outliers. This defines the starting point for the
+bottom up searching algorithm. Default is set to 0.5.}
 }
 \value{
 The indexes of the observations determined to be outliers and the outlying scores.
