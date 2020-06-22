@@ -81,12 +81,12 @@ find_HDoutliers <- function(data, alpha = 0.01, k = 10,
 #' @param k Number of neighbours considered.
 #' @param knnsearchtype A character vector indicating the search type for k- nearest-neighbors.
 #' @param p Proportion of possible candidates for outliers. This defines the starting point for the
-#' bottom up searching algorithm. Default is set to 0.5.
+#' bottom up searching algorithm.
 #' @return The indexes of the observations determined to be outliers and the outlying scores.
 #' @export
 #' @importFrom FNN knn.dist
 use_KNN <- function(data, alpha = 0.05, k = 10,
-                    knnsearchtype = c("kd_tree", "brute"), p = 0.5) {
+                    knnsearchtype = c("kd_tree", "brute"), p) {
 
   # k <- ceiling(length(exemplars) / 20)
   if (k == 1) {
@@ -99,6 +99,6 @@ use_KNN <- function(data, alpha = 0.05, k = 10,
     d <- d_knn[cbind(1:nrow(d_knn), max_diff)]
   }
 
-  out_index <- find_threshold(d, alpha = alpha, outtail = "max", p= p )
+  out_index <- find_threshold(d, alpha = alpha, outtail = "max", p =p )
   return(list(outliers = out_index, out_scores = d))
 }

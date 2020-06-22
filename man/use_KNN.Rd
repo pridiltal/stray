@@ -4,13 +4,7 @@
 \alias{use_KNN}
 \title{Find outliers using kNN distance with maximum gap}
 \usage{
-use_KNN(
-  data,
-  alpha = 0.05,
-  k = 10,
-  knnsearchtype = c("kd_tree", "brute"),
-  p = 0.5
-)
+use_KNN(data, alpha = 0.05, k = 10, knnsearchtype = c("kd_tree", "brute"), p)
 }
 \arguments{
 \item{data}{A vector, matrix, or data frame consisting of numeric and/or categorical variables.}
@@ -24,7 +18,7 @@ distances between exemplars.}
 \item{knnsearchtype}{A character vector indicating the search type for k- nearest-neighbors.}
 
 \item{p}{Proportion of possible candidates for outliers. This defines the starting point for the
-bottom up searching algorithm. Default is set to 0.5.}
+bottom up searching algorithm.}
 }
 \value{
 The indexes of the observations determined to be outliers and the outlying scores.
