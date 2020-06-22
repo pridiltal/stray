@@ -51,7 +51,7 @@ display_HDoutliers <- function(data, out) {
     out_display
   } else if (d > 2)
   {
-    rpc <- pcaPP::PCAproj(data, k = 2, scale = sd, center = mean)
+    rpc <- pcaPP::PCAproj(data[, 1:d], k = 2, scale = sd, center = mean)
     data$PC1 <- rpc$scores[, 1]
     data$PC2 <- rpc$scores[, 2]
     out_display <- ggplot(data) +
