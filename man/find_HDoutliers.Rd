@@ -9,7 +9,8 @@ find_HDoutliers(
   alpha = 0.01,
   k = 10,
   knnsearchtype = "brute",
-  normalize = "unitize"
+  normalize = "unitize",
+  p = 0.5
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ distances between exemplars.}
 \item{normalize}{Method to normalize the columns of the data. This prevents variables with large variances
 having disproportional influence on Euclidean distances. Two options are available "standardize" or "unitize".
 Default is set to "unitize"}
+
+\item{p}{Proportion to define the starting point for the bottom up searching algorithm.}
 }
 \value{
 The indexes of the observations determined to be outliers.
