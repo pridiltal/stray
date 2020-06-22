@@ -10,7 +10,8 @@ find_HDoutliers(
   k = 10,
   knnsearchtype = "brute",
   normalize = "unitize",
-  p = 0.5
+  p = 0.5,
+  tn = 50
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ Default is set to "unitize"}
 
 \item{p}{Proportion of possible candidates for outliers. This defines the starting point for the
 bottom up searching algorithm. Default is set to 0.5.}
+
+\item{tn}{Sample size to calculate an emperical threshold. Default is set to 50.}
 }
 \value{
 The indexes of the observations determined to be outliers.

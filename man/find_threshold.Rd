@@ -4,7 +4,7 @@
 \alias{find_threshold}
 \title{Find Outlier Threshold}
 \usage{
-find_threshold(outlier_score, alpha, outtail = c("max", "min"), p)
+find_threshold(outlier_score, alpha, outtail = c("max", "min"), p, tn)
 }
 \arguments{
 \item{outlier_score}{A vector of outlier scores. Can be a named vector or a vector with no names.}
@@ -17,6 +17,8 @@ distances between exemplars.}
 
 \item{p}{Proportion of possible candidates for outliers. This defines the starting point for the
 bottom up searching algorithm.}
+
+\item{tn}{Sample size to calculate an emperical threshold}
 }
 \value{
 The indexes (or names, if the input is named vactor) of the observations determined to be outliers.

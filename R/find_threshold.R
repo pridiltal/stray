@@ -7,9 +7,10 @@
 #' @param outtail Direction of the outlier tail.
 #' @param p Proportion of possible candidates for outliers. This defines the starting point for the
 #' bottom up searching algorithm.
+#' @param tn Sample size to calculate an emperical threshold
 #' @return The indexes (or names, if the input is named vactor) of the observations determined to be outliers.
 #' @export
-find_threshold <- function(outlier_score, alpha, outtail = c("max", "min"), p) {
+find_threshold <- function(outlier_score, alpha, outtail = c("max", "min"), p, tn) {
 
   n <- length(outlier_score)
   if(outtail == "min")
@@ -19,7 +20,7 @@ find_threshold <- function(outlier_score, alpha, outtail = c("max", "min"), p) {
 
   ord <- order(outlier_score)
   gaps <- c(0, diff(outlier_score[ord]))
-  n4 <- max(min(50, floor(n / 4)), 2)
+  n4 <- max(min(tn, floor(n / 4)), 2)
   J <- 2:n4
   start <- max(floor(n * (1-p)), 1) + 1
   ghat <- numeric(n)
