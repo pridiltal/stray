@@ -1,7 +1,7 @@
 Package: stray
 Type: Package
 Title: Anomaly Detection in High Dimensional and Temporal Data
-Version: 0.1.0
+Version: 0.1.1
 Depends: R (>= 3.4.0)
 Imports: FNN,
     ggplot2,

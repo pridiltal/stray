@@ -18,7 +18,7 @@ distances between exemplars.}
 \item{p}{Proportion of possible candidates for outliers. This defines the starting point for the
 bottom up searching algorithm.}
 
-\item{tn}{Sample size to calculate an emperical threshold}
+\item{tn}{Sample size to calculate an empirical threshold}
 }
 \value{
 The indexes (or names, if the input is named vactor) of the observations determined to be outliers.
