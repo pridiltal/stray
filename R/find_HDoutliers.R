@@ -9,8 +9,8 @@
 #' @param k Number of neighbours considered.
 #' @param knnsearchtype A character vector indicating the search type for k- nearest-neighbors.
 #' @param normalize Method to normalize the columns of the data. This prevents variables with large variances
-#'  having disproportional influence on Euclidean distances. Two options are available "standardize" or "unitize".
-#'  Default is set to "unitize"
+#'  having disproportional influence on Euclidean distances. Three options are available: "standardize", "unitize" or "none".
+#'  Default is set to "unitize". If "none" is passed, no normalization will be used (not recommended.)
 #' @param p Proportion of possible candidates for outliers. This defines the starting point for the
 #' bottom up searching algorithm. Default is set to 0.5.
 #' @param tn Sample size to calculate an emperical threshold. Default is set to 50.
@@ -38,7 +38,8 @@
 #'
 find_HDoutliers <- function(data, alpha = 0.01, k = 10,
                             knnsearchtype = "brute",
-                            normalize = "unitize", p = 0.5, tn =50) {
+                            normalize = c("unitize", "standardize", "none"), p = 0.5, tn =50) {
+  normalize <- match.arg(normalize, choices = c("unitize", "standardize", "none"))
   data <- as.matrix(data)
   r <- nrow(data)
   data[is.infinite(data)] <- NA
@@ -62,8 +63,9 @@ find_HDoutliers <- function(data, alpha = 0.01, k = 10,
   standardize <- function(z) {
     (z - stats::median(z)) / stats::IQR(z)
   }
-
-  data <- apply(as.matrix(naomit_data), 2, normalize)
+  if (normalize != "none") {
+    data <- apply(as.matrix(naomit_data), 2, normalize)
+  }
   out <- use_KNN(data, alpha, k = k, knnsearchtype = knnsearchtype, p = p, tn=tn)
   outliers <- tag[out$outliers]
   type <- as.factor(ifelse(1:r %in% outliers,

@@ -9,7 +9,7 @@ find_HDoutliers(
   alpha = 0.01,
   k = 10,
   knnsearchtype = "brute",
-  normalize = "unitize",
+  normalize = c("unitize", "standardize", "none"),
   p = 0.5,
   tn = 50
 )
@@ -26,8 +26,8 @@ distances between exemplars.}
 \item{knnsearchtype}{A character vector indicating the search type for k- nearest-neighbors.}
 
 \item{normalize}{Method to normalize the columns of the data. This prevents variables with large variances
-having disproportional influence on Euclidean distances. Two options are available "standardize" or "unitize".
-Default is set to "unitize"}
+having disproportional influence on Euclidean distances. Three options are available: "standardize", "unitize" or "none.
+Default is set to "unitize". If "none" is passed, no normalization will be used (not recommended.)}
 
 \item{p}{Proportion of possible candidates for outliers. This defines the starting point for the
 bottom up searching algorithm. Default is set to 0.5.}
