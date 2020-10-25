@@ -62,12 +62,17 @@ This package is still under development and this repository contains a developme
 
 ## Installation
 
-You can install oddstream from github with:
+You can install the stable version from CRAN.
 
+```{r cran-installation, eval = FALSE}
+install.packages('stray', dependencies = TRUE)
+```
+You can install stray from github with:
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("pridiltal/stray")
 ```
+
 ## Example
 
 ### One dimensional data set with one outlier

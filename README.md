@@ -24,7 +24,7 @@ output: github_document
  
 ---
  
-[![Last-changedate](https://img.shields.io/badge/last%20change-2020--06--22-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2020--10--26-yellowgreen.svg)](/commits/master)
 
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -50,13 +50,19 @@ This package is still under development and this repository contains a developme
 
 ## Installation
 
-You can install oddstream from github with:
+You can install the stable version from CRAN.
 
+
+```r
+install.packages('stray', dependencies = TRUE)
+```
+You can install stray from github with:
 
 ```r
 # install.packages("devtools")
 devtools::install_github("pridiltal/stray")
 ```
+
 ## Example
 
 ### One dimensional data set with one outlier
