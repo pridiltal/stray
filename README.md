@@ -50,12 +50,12 @@ This package is still under development and this repository contains a developme
 
 ## Installation
 
-You can install the stable version from CRAN.
-
+You can install the released version of stray from [CRAN](https://CRAN.R-project.org) with:
 
 ```r
 install.packages('stray', dependencies = TRUE)
 ```
+
 You can install stray from github with:
 
 ```r
