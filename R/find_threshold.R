@@ -10,8 +10,7 @@
 #' @param tn Sample size to calculate an empirical threshold
 #' @return The indexes (or names, if the input is named vactor) of the observations determined to be outliers.
 #' @export
-find_threshold <- function(outlier_score, alpha, outtail = c("max", "min"), p, tn) {
-
+find_threshold <- function(outlier_score, alpha = 0.01, outtail = c("max", "min"), p = 0.5, tn = 50) {
   n <- length(outlier_score)
   if(outtail == "min")
   {
