@@ -4,7 +4,13 @@
 \alias{find_threshold}
 \title{Find Outlier Threshold}
 \usage{
-find_threshold(outlier_score, alpha, outtail = c("max", "min"), p, tn)
+find_threshold(
+  outlier_score,
+  alpha = 0.01,
+  outtail = c("max", "min"),
+  p = 0.5,
+  tn = 50
+)
 }
 \arguments{
 \item{outlier_score}{A vector of outlier scores. Can be a named vector or a vector with no names.}
