@@ -11,9 +11,9 @@
 #' @return The indexes (or names, if the input is named vactor) of the observations determined to be outliers.
 #' @export
 find_threshold <- function(outlier_score, alpha = 0.01, outtail = c("max", "min"), p = 0.5, tn = 50) {
+  outtail <- match.arg(outtail)
   n <- length(outlier_score)
-  if(outtail == "min")
-  {
+  if(outtail == "min") {
     outlier_score <- - outlier_score
   }
 
